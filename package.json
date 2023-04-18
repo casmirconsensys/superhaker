@@ -1,0 +1,40 @@
+{
+  "name": "360nft",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@paypal/react-paypal-js": "^7.4.2",
+    "@reduxjs/toolkit": "^1.6.2",
+    "@toruslabs/torus-embed": "^1.13.4",
+    "@walletconnect/web3-provider": "^1.6.6",
+    "adaptr-music-player": "^0.3.8",
+    "axios": "^0.22.0",
+    "bootstrap": "5.1.1",
+    "classnames": "^2.3.1",
+    "moralis": "^0.0.88",
+    "next": "^11.1.2",
+    "quick-react-notification": "^1.0.9",
+    "react": "^17.0.2",
+    "react-bootstrap": "^2.0.0-rc.1",
+    "react-dom": "^17.0.2",
+    "react-moralis": "^0.3.0",
+    "react-paypal-button-v2": "^2.6.3",
+    "react-redux": "^7.2.5",
+    "react-responsive": "^9.0.0-beta.4",
+    "redux-persist": "^6.0.0",
+    "userflow.js": "^2.2.0",
+    "waitlistapi": "^0.6.2",
+    "web3": "^1.6.0",
+    "zustand": "^3.5.13"
+  },
+  "devDependencies": {
+    "eslint": "7.32.0",
+    "eslint-config-next": "11.1.2"
+  }
+}
