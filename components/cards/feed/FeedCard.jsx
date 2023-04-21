@@ -65,27 +65,6 @@ const FeedCard = ({ feed }) => {
         })
     }
 
-    // const buyItem = async (id, price) => {
-    //     Moralis.Web3.authenticate({signingMessage:'Trapchain Authentication'}).then(async (user) => {
-    //         await Moralis.getChainId().then(async (data) => {
-    //             chainId.current = data
-    //             switch (chainId.current) {
-    //                 case 3:
-    //                     MARKETPLACE_CONTRACT_ADDRESS.current = web3.utils.toChecksumAddress('0x941569323CdE0F2AA6ECd3965d7f5Ce75d93cF7a') //ROPSTEN TESTNET
-    //                     break;
-    //                 case 19877346431401:
-    //                     MARKETPLACE_CONTRACT_ADDRESS.current = web3.utils.toChecksumAddress('0xF91e3F6438dbA8C42612958CAe9b88bCE8dAC55E') //SKALE TESTNET
-    //                     break;
-    //             }
-    //             console.log(MARKETPLACE_CONTRACT_ADDRESS.current);
-    //             const marketPlaceContract = new web3.eth.Contract(marketPlaceABI, MARKETPLACE_CONTRACT_ADDRESS.current)
-    //             const receipt = await marketPlaceContract.methods.buyItem(id).send({from: walletAddress, value: price})
-    //             console.log(receipt);
-    //         })
-    //     })
-    // }options={{ currency, clientId, disableFunding: 'credit' }}
-
-
     return (      
          isPortrait ?
             <div style={{color: 'white'}} className={`${styles.cardContainer} ${fonts.mont}`}>

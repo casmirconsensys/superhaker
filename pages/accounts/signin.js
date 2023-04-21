@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from 'next/router';
 import { useEffect } from 'react'
 import { setPic, setWalletAddress, setUName, setName, setEmail } from '../../features/redux/user/user-slice'
-import { useMoralis } from 'react-moralis';
+// import { useMoralis } from 'react-moralis';
 import { Alert } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { setMoralisUserName, setUserLoggedIn } from '../../features/redux/user/user-slice'
@@ -19,55 +20,57 @@ const SignIn = () => {
    
     const router = useRouter()
     const dispatch = useDispatch()
-    const { authenticate, isAuthenticating, isAuthenticated, authError, user: moralisUser, Moralis } = useMoralis()
+    // const { authenticate, isAuthenticating, isAuthenticated, authError, user: moralisUser, Moralis } = useMoralis()
 
     let mUname
-    useEffect( async () => {
-        if (isAuthenticated) {
-            mUname = moralisUser.get('username')
-            dispatch(setMoralisUserName(mUname))
-            dispatch(setWalletAddress(moralisUser.get('ethAddress')))
-            const UserClass = await Moralis.Object.extend('User')
-            const query = new Moralis.Query(UserClass).equalTo('username', mUname)
-            const results = await query.find()
-            const user = JSON.parse(JSON.stringify(results))
-            const objId = (user[0].objectId)
-            const userObj = await new Moralis.Query(UserClass).get(objId)
-            const trapUsername = userObj.get('trapUsername')
-            if (trapUsername) {
-                dispatch(setUserLoggedIn(true))
-                const image = userObj.get('avatar')
-                const name = userObj.get('name')
-                const email = userObj.get('email')
-                image && dispatch(setPic(image?._url))
-                dispatch(setName(name))
-                dispatch(setUName(trapUsername))
-                email && dispatch(setEmail(email))
-                // const returnUrl = router.query.r || '/feed';
-                // console.log(returnUrl)
-                router.push('/feed')
-            } else
-                router.push('/accounts/signup')
-        }
+    // useEffect( async () => {
+    //     if (isAuthenticated) {
+    //         mUname = moralisUser.get('username')
+    //         dispatch(setMoralisUserName(mUname))
+    //         dispatch(setWalletAddress(moralisUser.get('ethAddress')))
+    //         const UserClass = await Moralis.Object.extend('User')
+    //         const query = new Moralis.Query(UserClass).equalTo('username', mUname)
+    //         const results = await query.find()
+    //         const user = JSON.parse(JSON.stringify(results))
+    //         const objId = (user[0].objectId)
+    //         const userObj = await new Moralis.Query(UserClass).get(objId)
+    //         const trapUsername = userObj.get('trapUsername')
+    //         if (trapUsername) {
+    //             dispatch(setUserLoggedIn(true))
+    //             const image = userObj.get('avatar')
+    //             const name = userObj.get('name')
+    //             const email = userObj.get('email')
+    //             image && dispatch(setPic(image?._url))
+    //             dispatch(setName(name))
+    //             dispatch(setUName(trapUsername))
+    //             email && dispatch(setEmail(email))
+    //             // const returnUrl = router.query.r || '/feed';
+    //             // console.log(returnUrl)
+    //             router.push('/feed')
+    //         } else
+    //             router.push('/accounts/signup')
+    //     }
     
-    }, [isAuthenticated])
+    // }, [])
 
     // const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
     const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
     return (
         <>
             <Layout backgroundImage='signin'>
+
+
             
-                { !isAuthenticated ?
+                {/* { !isAuthenticated ? */}
                     <div className='row'>
                         <LAccountsCol logo='../images/accounts/360in.svg' image='../images/accounts/sign-in-banner.jpg' alt=''/>
                         <RAccountsCol>
                             <>
-                                { authError && <Alert variant='danger'>
+                                {/* { authError && <Alert variant='danger'>
                                                     <Alert.Heading>Authentication has failed</Alert.Heading>
                                                     <p>{authError.message}</p>
                                                 </Alert>
-                                }
+                                } */}
                                 <h1 className={`color-primary ${fonts.druk}`} style={{marginBottom: 32}}>
                                     LOG IN
                                     <br/>
@@ -75,10 +78,13 @@ const SignIn = () => {
                                 </h1>
                                 {isPortrait ?
                                     <div className={styles.buttonsContainerMobile}>
-                                        <Button onClick={() => authenticate({ signingMessage: "Trapchain! Authentication" })} type='social' bg='google' iconClass='icon-metamask' disabled={isAuthenticating}>
+                                        <Button type='social' bg='google' iconClass='icon-metamask'>
+                                            <span style={{paddingLeft: 12}}>Log in with Metamask</span>
+                                        </Button>
+                                        {/* <Button onClick={() => authenticate({ signingMessage: "Trapchain! Authentication" })} type='social' bg='google' iconClass='icon-metamask' disabled={isAuthenticating}>
                                                 {isAuthenticating ? <span className='spinner-border spinner-border-sm' style={{margin: '0 48px'}} role='status' aria-hidden='true'></span>
                                                 : <span style={{paddingLeft: 12}}>Log in with Metamask</span>}
-                                        </Button>
+                                        </Button> */}
                                         <div style={{paddingBottom: '10px'}} ></div>
                                         <Button isLink={1} href='https://www.facebook.com/nftrapchain' type='social' bg='facebook' iconClass='icon-facebook'>
                                             <span style={{paddingLeft: 12}}>Visit us on Facebook</span>
@@ -94,9 +100,12 @@ const SignIn = () => {
                                     </div>
                                     :
                                 <div className={styles.buttonsContainer}>
-                                    <Button onClick={() => authenticate({ signingMessage: "Trapchain! Authentication" })} type='social' bg='google' iconClass='icon-metamask' disabled={isAuthenticating}>
+                                    {/* <Button onClick={() => authenticate({ signingMessage: "Trapchain! Authentication" })} type='social' bg='google' iconClass='icon-metamask' disabled={isAuthenticating}>
                                             {isAuthenticating ? <span className='spinner-border spinner-border-sm' style={{margin: '0 48px'}} role='status' aria-hidden='true'></span>
                                             : <span style={{paddingLeft: 12}}>Log in with Metamask</span>}
+                                    </Button> */}
+                                    <Button type='social' bg='google' iconClass='icon-metamask'>
+                                        <span style={{paddingLeft: 12}}>Log in with Metamask</span>
                                     </Button>
                                     <span className='margin-right-wide'></span>
                                     <Button isLink={1} href='https://www.facebook.com/nftrapchain' type='social' bg='facebook' iconClass='icon-facebook'/>
@@ -115,7 +124,7 @@ const SignIn = () => {
                         <br/>
                         <Loader/>
                     </div>
-                }
+                {/* } */}
             </Layout>
         </>
     )
