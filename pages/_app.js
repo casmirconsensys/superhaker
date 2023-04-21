@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import { Provider } from 'react-redux'
 import { store } from '../features/store'
 import { SSRProvider } from '@react-aria/ssr'
-// import { MoralisProvider } from 'react-moralis';
 import { RouteGuard } from '../components/RouteGuard';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
@@ -24,13 +23,11 @@ function MyApp({ Component, pageProps }) {
   return <SSRProvider>
           <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-              {/* {typeof window !== 'undefined' && <MoralisProvider appId={process.env.MORALIS_API_KEY} serverUrl={process.env.APP_DOMAIN}> */}
                 <RouteGuard>
                 <NotificationProvider>
                   <Component {...pageProps} />
                   </NotificationProvider>
                 </RouteGuard>
-              {/* </MoralisProvider>} */}
             </PersistGate>
         </Provider>
         </SSRProvider>

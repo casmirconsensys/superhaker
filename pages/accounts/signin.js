@@ -2,7 +2,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react'
 import { setPic, setWalletAddress, setUName, setName, setEmail } from '../../features/redux/user/user-slice'
-// import { useMoralis } from 'react-moralis';
 import { Alert } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { setMoralisUserName, setUserLoggedIn } from '../../features/redux/user/user-slice'
@@ -20,7 +19,6 @@ const SignIn = () => {
    
     const router = useRouter()
     const dispatch = useDispatch()
-    // const { authenticate, isAuthenticating, isAuthenticated, authError, user: moralisUser, Moralis } = useMoralis()
 
     let mUname
     // useEffect( async () => {
