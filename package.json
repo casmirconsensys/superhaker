@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@lens-protocol/react-web": "^1.0.1",
+    "@livepeer/react": "^2.4.3",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/node": "18.15.13",
     "@types/react": "18.0.38",
