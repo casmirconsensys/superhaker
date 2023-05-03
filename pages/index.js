@@ -7,16 +7,22 @@ import Button from '../components/basic/button/Button'
 import Foot from '../components/sections/foot/Foot'
 import styles from '../styles/Home.module.css'
 import fonts from '../styles/Fonts.module.css'
+import Modal from '../components/modals/huddleModal'
+import { useState } from 'react';
 // import userflow from 'userflow.js'
 // import { Waitlist } from 'waitlistapi'
 // import { useEffect } from 'react';
 
 const ThemeButton = dynamic(() => import('../components/basic/ThemeButton'), {
   ssr: false,
+  
 });
 
 export default function Home() {
+  // const [openModal, setOpenModal] = React.useState(false);
+
     return (
+
             <Layout backgroundImage='home'>
               <nav className={styles.navbar}>
                     <div className={styles.containerFluid}>
@@ -24,9 +30,13 @@ export default function Home() {
                         <div className={styles.buttons}>
                           <ThemeButton/>
                           <span className='margin-right-wide'></span>
-                          <Button isLink={1} href='accounts/signin' bg='dark' text='Claim Drop' />
+                          <Button className="openModalBtn"
+                          onClick={()=>{setOpenModal(true)}}  bg='dark' text='Join Lobby' />  <Modal/>
                           <span className='margin-right-wide'></span>
-                          <Button isLink={1} href='accounts/signin' bg='greenToPurple' spread='gradient' text='Login' />
+                          <Button className="openModalBtn"
+                          onClick={()=>{
+                            setOpenModal(true)
+                          }}  bg='greenToPurple' spread='gradient' text='Login' />
                         </div>
                     </div>
                 </nav>       
@@ -62,3 +72,4 @@ export default function Home() {
             </Layout>
     )
 }
+ 

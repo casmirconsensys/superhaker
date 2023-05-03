@@ -13,9 +13,9 @@ export default function App({ Component, pageProps }) {
 
   return <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-              <RouteGuard>
+              {/* <RouteGuard> */}
                 <Component {...pageProps} />
-              </RouteGuard>
+              {/* </RouteGuard> */}
             </PersistGate>
 
           </Provider>
