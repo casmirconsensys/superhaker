@@ -31,7 +31,8 @@ export default function Home() {
                           <ThemeButton/>
                           <span className='margin-right-wide'></span>
                           <Button className="openModalBtn"
-                          onClick={()=>{setOpenModal(true)}}  bg='dark' text='Join Lobby' />  <Modal/>
+                          onClick={()=>{setOpenModal(true)}}  bg='dark' text='Join Lobby' /> 
+                           <Modal/>
                           <span className='margin-right-wide'></span>
                           <Button className="openModalBtn"
                           onClick={()=>{

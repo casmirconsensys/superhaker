@@ -17,10 +17,11 @@ import React from 'react';
 //     );
 // }
  
-function huddleModal() {
+function huddleModal({ closeModal }) {
   return (
     <div className='modalBackground'>
         <div className='modalContainer'>
+            <button onClick={() => closeModal(false)}>X</button>
             <div className='title'>
                 <h1>Join Lobby</h1>
                 <div className='Body'>
