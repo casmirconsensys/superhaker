@@ -1,0 +1,60 @@
+.modalBackground
+{
+    background-color: rgba(200, 200, 200);
+    position: fixed;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+.modalContainer
+{
+    background-color: white;
+    border-radius: 12px;
+    padding: 25px;
+    width: 500px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0.35 ) 0px 5px 15px;
+}
+
+.modalContainer .title {
+    display: inline-block;
+    font-family: "Montserrat";
+    text-align: center;
+    margin-top: 10px;
+}
+
+.titleCloseBtn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.titleCloseBtn button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 25px;
+    cursor: pointer;
+}
+.modalContainer .footer button {
+    background-color: #00d5ff;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-family: "Montserrat";
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.71;
+    text-align: center;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+#cancelBtn {
+    background-color: #e5e5e5;
+    color: #f80404;
+    margin-right: 10px;
+}
