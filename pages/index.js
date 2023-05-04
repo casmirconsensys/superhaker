@@ -19,6 +19,39 @@ const ThemeButton = dynamic(() => import('../components/basic/ThemeButton'), {
 });
 
 // useEffect(() => {
+//   fetch("https://iriko.testing.huddle01.com/api/v1/create-room", {
+//   method: "POST",
+//   {
+//     "title": "Test Meeting",
+//     "tokenType": "ERC20",
+//     "chain": "POLYGON",
+//     "contractAddress": ["0xf7987a1ce54d462f9b00574c5af62c2ddfb20b64"]
+//   },
+//   headers: {
+//       "Content-type": "application/json",
+//       'x-api-key': {{VwTZ4AGTxme9snANex9tep3NwvVMGfYd}},
+//   },
+// }, [])
+// .then(res => res.json())
+// .then(data => setEntry(data));
+
+
+// const  response = await fetch("https://iriko.testing.huddle01.com/api/v1/create-room", {
+//   method: "POST",
+//   {
+//     "title": "Test Meeting",
+//     "tokenType": "ERC1155",
+//     "chain": "POLYGON",
+//     "contractAddress": ["0xADC327CC02d3230af723C47eCd91a73F600d7E3A"]
+//   },
+//   headers: {
+//       "Content-type": "application/json",
+//       'x-api-key': {{API_KEY}},
+//   },
+// }
+// )
+
+// useEffect(() => {
 //   fetch('https://app.huddle01.com/qrh-jwfa-wov', {
 //     method: 'GET',
 //     headers: {
