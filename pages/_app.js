@@ -1,4 +1,4 @@
-import '@/styles/globals.css'
+import  styles from '/styles/globals.css'
 import { useEffect } from 'react'
 import { RouteGuard } from '../components/RouteGuard';
 import { Provider } from 'react-redux'
