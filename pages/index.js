@@ -15,7 +15,6 @@ import { useState } from 'react';
 
 const ThemeButton = dynamic(() => import('../components/basic/ThemeButton'), {
   ssr: false,
-  
 });
 
 export default function Home() {
