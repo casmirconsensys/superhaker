@@ -6,6 +6,7 @@ import Logo from '../components/basic/Logo'
 import Button from '../components/basic/button/Button'
 import Foot from '../components/sections/foot/Foot'
 import styles from '../styles/Home.module.css'
+import '../styles/Home.module.css'
 import fonts from '../styles/Fonts.module.css'
 import Modal from '../components/modals/huddleModal'
 import { useState } from 'react';
@@ -40,6 +41,11 @@ export default function Home() {
   const handleButtonClick = () => {
     setIsModalOpen(true);
   }
+  const [showModal, setShowModal] = useState(false);
+
+  const handleModal = () => {
+    setShowModal(!showModal);
+  };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -47,7 +53,10 @@ export default function Home() {
 
     return (
         <div>
-            <Layout backgroundImage='home'>
+                    <div className="App">
+
+              </div>
+              <Layout backgroundImage='home'>
               <nav className={styles.navbar}>
                     <div className={styles.containerFluid}>
                         <Logo/>  
@@ -57,24 +66,33 @@ export default function Home() {
                           {/* <Button className="openModalBtn"
                           onClick={()=>{setOpenModal(true)}}  bg='dark' text='Join Lobby' /> 
                            <Modal/> */}
-                              <Button className="openModalBtn" onClick={handleButtonClick} bg='dark' text='Join Lobby' />
-                                {isModalOpen && (
+                              <Button className="openModalBtn" onClick={handleModal} bg='dark' text='Join Lobby' />
+                                {/* {isModalOpen && (
                                   <div className="modal">
                                     <div className="modal-content">
-                                      <span className="close" onClick={handleModalClose}>&times;</span>
-                                      <iframe
-                                        id="huddle01-iframe"
-                                        src="https://app.huddle01.com/qrh-jwfa-wov"
-                                        name="myiFrame"
-                                        scrolling="no"
-                                        height="90%"
-                                        width="90%"
-                                        allowFullScreen
-                                        allow="camera; microphone; clipboard-read; clipboard-write; display-capture"
-                                      ></iframe>
+                                      <span className="close" onClick={handleModal}>&times;</span>
+                                     
                                     </div>
                                   </div>
-                                )}
+                                )} */}
+                                                <div className="modal-container">
+                  {/* <button onClick={handleModal}>Open Modal</button> */}
+                  {showModal && (
+                    <div className="modal">
+                      <div className="modal-content">
+                        <iframe
+                          id="huddle01-iframe"
+                          src="https://app.huddle01.com/qrh-jwfa-wov"
+                          name="myiFrame"
+                          scrolling="no"
+                          allowFullScreen
+                          allow="camera; microphone; clipboard-read; clipboard-write; display-capture"
+                        ></iframe>
+                        <button onClick={handleModal}>X</button>
+                      </div>
+                    </div>
+                  )}
+                </div>
                           <span className='margin-right-wide'></span>
                           <Button className="openModalBtn"
                           onClick={()=>{
@@ -104,6 +122,7 @@ export default function Home() {
                         <br/>
                         <h1 className={`color-primary ${fonts.mont}`} style={{fontWeight: 300}}>Welcome Friend,<br/>please log in</h1>
                       </div>
+                      
                   </div>
                        
                   {/* Show Waitlist if ! authenticated */}
@@ -113,6 +132,10 @@ export default function Home() {
               </div>    
               <Foot position='static'/> 
             </Layout>
+
+
+
+           
         </div>
     )
 }

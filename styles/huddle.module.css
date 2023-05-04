@@ -58,3 +58,10 @@
     color: #f80404;
     margin-right: 10px;
 }
+.StaticContainer {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    height: 20vh;
+    width: 50%;
+}

@@ -47,3 +47,54 @@
       top: 15px;
     }
 }
+.modal-container {
+  margin-top: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.modal {
+  position: fixed;
+  top: 500px;
+  margin-top: 500px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  position: relative;
+  background-color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.modal-content iframe {
+  width: 100%;
+  height: 80vh;
+  border: none;
+}
+
+.modal-content button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+/* .StaticContainer {
+  position: absolute;
+  top: 35%;
+  left: 40%;
+  height: 500px;
+  width: 50%;
+} */
