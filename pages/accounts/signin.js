@@ -38,7 +38,7 @@ const Signin = () => {
                         </h1>
                         {isPortrait ?
                             <div className={styles.buttonsContainerMobile}>
-                                <Button type='social' bg='google' iconClass='icon-metamask'>
+                                <Button className= 'lens-signin'type='social' bg='google' iconClass='icon-metamask'>
                                     <span style={{paddingLeft: 12}}>Log in with Metamask</span>
                                 </Button>
                                 {/* <Button onClick={() => authenticate({ signingMessage: "Trapchain! Authentication" })} type='social' bg='google' iconClass='icon-metamask' disabled={isAuthenticating}>
