@@ -1,19 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from 'next/router';
-import { useEffect } from 'react'
-import { setPic, setWalletAddress, setUName, setName, setEmail } from '../../features/redux/user/user-slice'
+import { useEffect } from 'react';
+import { setPic, setWalletAddress, setUName, setName, setEmail } from '../../features/redux/user/user-slice';
 // import { useMoralis } from 'react-moralis';
-import { Alert } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
-import { setMoralisUserName, setUserLoggedIn } from '../../features/redux/user/user-slice'
-import Layout from '../../components/Layout'
-import LAccountsCol from '../../components/sections/LAccountsCol'
-import RAccountsCol from '../../components/sections/racol/RAccountsCol'
-import fonts from '../../styles/Fonts.module.css'
-import Button from '../../components/basic/button/Button'
-import styles from '../../styles/Accounts.module.css'
+import { Web3AuthModalPack, Web3AuthConfig } from '@safe-global/auth-kit';
+import { Web3AuthOptions } from '@web3auth/modal';
+import { OpenloginAdapter } from '@web3auth/openlogin-adapter'
+import { Alert } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+// import { setMoralisUserName, setUserLoggedIn } from '../../features/redux/user/user-slice'
+
+import Layout from '../../components/Layout';
+import LAccountsCol from '../../components/sections/LAccountsCol';
+import RAccountsCol from '../../components/sections/racol/RAccountsCol';
+import fonts from '../../styles/Fonts.module.css';
+import Button from '../../components/basic/button/Button';
+import styles from '../../styles/Accounts.module.css';
 import Loader from '../../components/basic/loader/Loader';
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive';
 
 
 const SignIn = () => {
@@ -22,7 +26,7 @@ const SignIn = () => {
     const dispatch = useDispatch()
     // const { authenticate, isAuthenticating, isAuthenticated, authError, user: moralisUser, Moralis } = useMoralis()
 
-    let mUname
+    let mUname = ''//replace Moralis
     // useEffect( async () => {
     //     if (isAuthenticated) {
     //         mUname = moralisUser.get('username')
