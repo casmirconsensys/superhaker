@@ -25,7 +25,46 @@ const SignIn = () => {
     const router = useRouter()
     const dispatch = useDispatch()
     // const { authenticate, isAuthenticating, isAuthenticated, authError, user: moralisUser, Moralis } = useMoralis()
+    // https://web3auth.io/docs/sdk/pnp/web/modal/initialize#arguments
+    const options = {
+        clientId: process.env.YOUR_WEB3_AUTH_CLIENT_ID, // https://dashboard.web3auth.io/,
+        web3AuthNetwork: 'testnet',
+        chainConfig: {
+            chainNamespace: CHAIN_NAMESPACES.EIP155,
+            chainId: '0x5',
+            rpcTarget: 'https://rpc.ankr.com/eth_goerli'
+        },
+        uiConfig: {
+            theme: 'dark',
+            loginMethodsOrder: ['google', 'facebook']
+        }
+    };
+    
+        // https://web3auth.io/docs/sdk/pnp/web/modal/initialize#configuring-adapters
+    const modalConfig = {
+        [WALLET_ADAPTERS.TORUS_EVM]: {
+        label: 'torus',
+        showOnModal: false
+        },
+        [WALLET_ADAPTERS.METAMASK]: {
+        label: 'metamask',
+        showOnDesktop: true,
+        showOnMobile: false
+        }
+    }
 
+    const openloginAdapter = new OpenloginAdapter({
+        loginSettings: {
+          mfaLevel: 'mandatory'
+        },
+        adapterSettings: {
+          uxMode: 'popup',
+          whiteLabel: {
+            name: 'Safe'
+          }
+        }
+      });
+      
     let mUname = ''//replace Moralis
     // useEffect( async () => {
     //     if (isAuthenticated) {
