@@ -64,10 +64,10 @@ const SignIn = () => {
           }
         }
       });
-      const web3AuthConfig: Web3AuthConfig = {
+      const web3AuthConfig = {
         txServiceUrl: 'https://safe-transaction-goerli.safe.global'
-      }
-      
+    };
+    
     let mUname = ''//replace Moralis
     // useEffect( async () => {
     //     if (isAuthenticated) {
