@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-// const defaults = {name: 'Casmir Patterson', uname: 'askcasmir', email: 'founder@nftyco.com', onWait: 'true', upic: '/images/user/avatar.jpg', ucover: '/images/user/cover.jpg', moralisUserName: '', moralisObject: {}}
+// const defaults = {name: 'Casmir Patterson', uname: 'askcasmir', email: 'founder@nftyco.com', onWait: 'true', upic: '/images/user/avatar.jpg', ucover: '/images/user/cover.jpg', UserName: '', Object: {}}
 const defaults = {
    name: '', 
    uname: '',
@@ -8,7 +8,7 @@ const defaults = {
    onWait: 'true',
    upic: '/images/user/avatar.jpg',
    ucover: '/images/user/cover.jpg',
-   moralisUserName: '',
+   UserName: '',
    walletAddress: '',
    isLoggedIn: false,
 }
@@ -33,7 +33,7 @@ export const userSlice = createSlice({
         setCover: (state, action) => { 
            state.ucover = action.payload
         },
-        setMoralisUserName: (state, action) => { 
+        setUserName: (state, action) => { 
            state.moralisUserName = action.payload
         },
         setWalletAddress: (state, action) => { 
@@ -44,7 +44,7 @@ export const userSlice = createSlice({
       },
     }
 })
-export const { setName, setUName, setEmail, setPic, setCover, setMoralisUserName, setWalletAddress, setUserLoggedIn } = userSlice.actions
+export const { setName, setUName, setEmail, setPic, setCover, setUserName, setWalletAddress, setUserLoggedIn } = userSlice.actions
 export default userSlice.reducer
 
 

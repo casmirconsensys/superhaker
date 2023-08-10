@@ -15,14 +15,14 @@ import { useContract, useNFTs, ThirdwebNftMedia } from "@thirdweb-dev/react";
 const ThemeButton = dynamic(() => import('../components/basic/ThemeButton'), {
   ssr: false,
 });
-const { data: name, isLoading: loadingName } = useContractRead(
-  contract,
-  "name", // The name of the view/mapping/variable on your contract
-);
-const { mutate: setName, isLoading: settingName } = useContractWrite(
-  contract,
-  "setName", // The name of the function on your contract
-);
+// const { data: name, isLoading: loadingName } = useContractRead(
+//   contract,
+//   "name", // The name of the view/mapping/variable on your contract
+// );
+// const { mutate: setName, isLoading: settingName } = useContractWrite(
+//   contract,
+//   "setName", // The name of the function on your contract
+// );
 
   // userflow.init('USERFLOW_TOKEN')
   // userflow.identify('USER_ID', {
@@ -33,16 +33,16 @@ const { mutate: setName, isLoading: settingName } = useContractWrite(
 
 
 export default function Home() {
-  const { contract } = useContract("<CONTRACT_ADDRESS>");
-  const { data: name, isLoading: loadingName } = useContractRead(
-    contract,
-    "name", // The name of the view/mapping/variable on your contract
-  );
-  const { mutate: setName, isLoading: settingName } = useContractWrite(
-    contract,
-    "setName", // The name of the function on your contract
-  );
-  const { data: nfts, isLoading: isReadingNfts } = useNFTs(contract);
+  // const { contract } = useContract("<CONTRACT_ADDRESS>");
+  // const { data: name, isLoading: loadingName } = useContractRead(
+  //   contract,
+  //   "name", // The name of the view/mapping/variable on your contract
+  // );
+  // const { mutate: setName, isLoading: settingName } = useContractWrite(
+  //   contract,
+  //   "setName", // The name of the function on your contract
+  // );
+  // const { data: nfts, isLoading: isReadingNfts } = useNFTs(contract);
 
     return (
             <Layout backgroundImage='home'>

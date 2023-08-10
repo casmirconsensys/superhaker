@@ -19,7 +19,7 @@ const Upload = ( { hideModal }) => {
     const dispatch = useDispatch()
     const [fileType, setFileType] = useState('')
 
-    const { Moralis, enableWeb3, web3 } = useMoralis()
+    // const { Moralis, enableWeb3, web3 } = useMoralis()
     const { showNotification } = useNotification();
     const fileName = useSelector(state => state.upload.file)
     const tokenName = useSelector(state => state.upload.tokenName)
@@ -179,7 +179,7 @@ const Upload = ( { hideModal }) => {
             setNftID(nftId)
 
             // Save to Moralis Database
-            const Item = Moralis.Object.extend('Item');
+            // const Item = Moralis.Object.extend('Item');
             const item = new Item();
             item.set('name', tokenName);
             item.set('description', tokenDesc);
@@ -222,20 +222,20 @@ const Upload = ( { hideModal }) => {
         }
     }
 
-    const uploadNFT = async () => {
-        const id = await Moralis.getChainId().then(async (data) => {
-            chainId.current = data
-            if (chainId.current === 1175159915491121) {
-                await processNFT()
-            }  else {
-                showNotification({type: 'warning', message: 'No supported chain found. Trapchain will be added as the default chain. Approve to proceed'})
-                await switchNetworkToSKALE()    
-                await sendUserSKETH() 
-                await processNFT()            
-            }
-        })
-        setisUploading(false)
-    }
+    // const uploadNFT = async () => {
+    //     // const id = await Moralis.getChainId().then(async (data) => {
+    //         chainId.current = data
+    //         if (chainId.current === 1175159915491121) {
+    //             await processNFT()
+    //         }  else {
+    //             showNotification({type: 'warning', message: 'No supported chain found. Trapchain will be added as the default chain. Approve to proceed'})
+    //             await switchNetworkToSKALE()    
+    //             await sendUserSKETH() 
+    //             await processNFT()            
+    //         }
+    //     })
+    //     setisUploading(false)
+    // }
     
     const sendUserSKETH = async () => {
         web3.eth.accounts.signTransaction({

@@ -41,7 +41,7 @@ const UserProfile = () => {
     }, [])
 
     // const { Moralis } = useMoralis()
-    const { data, error, isLoading, fetch } = useMoralisCloudFunction('getUserItems')
+    // const { data, error, isLoading, fetch } = useMoralisCloudFunction('getUserItems')
     // const { data: itemsForSale, fetch: fetchItemsForSale } = useMoralisCloudFunction('getItemsForSale')
     // console.table(itemsForSale);
 
@@ -74,7 +74,7 @@ const UserProfile = () => {
     }
 
     const handleCoverSelect = async (e) => {
-        const chainId = await Moralis.getChainId()
+        // const chainId = await Moralis.getChainId()
         console.log('chain', chainId); // 56
     }
 

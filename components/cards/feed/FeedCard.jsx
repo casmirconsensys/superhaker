@@ -7,6 +7,10 @@ import { useDispatch, useSelector} from 'react-redux'
 import {useState, useRef} from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { useNotification } from 'quick-react-notification'
+import { Web3AuthOptions } from '@web3auth/modal'
+import { OpenloginAdapter } from '@web3auth/openlogin-adapter'
+import { Web3AuthModalPack, Web3AuthConfig, CHAIN_NAMESPACES } from '@safe-global/auth-kit';
+import { WALLET_ADAPTERS } from '@safe-global/auth-kit';
 // import { PayPalButton } from 'react-paypal-button-v2';
 // import { auction } from '@thirdweb-dev/marketplace'; // Import the appropriate module from Thirdweb
 // import { NewAuctionListing } from '@thirdweb-dev/marketplace/types'; // Import the NewAuctionListing type from Thirdweb
@@ -21,11 +25,9 @@ const FeedCard = ({ feed }) => {
 
     // const { Moralis, enableWeb3, web3 } = useMoralis()
     const { showNotification } = useNotification();
-
     const [showAll, setShowAll] = useState(false)
     const dispatch = useDispatch()
     const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
-
     const [buying, setBuying] = useState(false)
 
     const buyItem = async function createDirectListing(
@@ -50,8 +52,7 @@ const FeedCard = ({ feed }) => {
         }
     };
     
-      
-
+    
     const payWithWallet = async (id) => {
         await enableWeb3();
     
@@ -67,13 +68,74 @@ const FeedCard = ({ feed }) => {
     
                 buyItem(id, result.from, 'none');
             } else {
-                showNotification({ type: 'error', message: 'Make sure you are on ETH or BNB Network' });
+                showNotification({ type: 'error', message: 'Make sure you are on ETH or BASE Network' });
             }
         } catch (error) {
             showNotification({ type: 'error', message: error.message });
         }
     };
+    // Options for Web3Auth
+    async function initializeWeb3Auth() {
+        // Options for Web3Auth
+        const options = {
+            clientId: 'YOUR_WEB3_AUTH_CLIENT_ID',
+            web3AuthNetwork: 'testnet',
+            chainConfig: {
+                chainNamespace: CHAIN_NAMESPACES.EIP155,
+                chainId: '0x5',
+                rpcTarget: 'https://rpc.ankr.com/eth_goerli'
+            },
+            uiConfig: {
+                theme: 'dark',
+                loginMethodsOrder: ['google', 'facebook']
+            }
+        };
+        
+        // Adapter configurations
+        const modalConfig = {
+            [WALLET_ADAPTERS.TORUS_EVM]: {
+                label: 'torus',
+                showOnModal: false
+            },
+            [WALLET_ADAPTERS.METAMASK]: {
+                label: 'metamask',
+                showOnDesktop: true,
+                showOnMobile: false
+            }
+        };
+        
+        // Openlogin adapter
+        const openloginAdapter = new OpenloginAdapter({
+            loginSettings: {
+                mfaLevel: 'mandatory'
+            },
+            adapterSettings: {
+                uxMode: 'popup',
+                whiteLabel: {
+                    name: 'Safe'
+                }
+            }
+        });
+        
+        // Web3Auth configuration
+        const web3AuthConfig = {
+            txServiceUrl: 'https://safe-transaction-goerli.safe.global'
+        };
+        
+        // Instantiate and initialize the pack
+        const web3AuthModalPack = new Web3AuthModalPack(web3AuthConfig);
+        
+        try {
+            await web3AuthModalPack.init({ options, adapters: [openloginAdapter], modalConfig });
+            console.log('Web3Auth initialized successfully.');
+        } catch (error) {
+            console.error('Error initializing Web3Auth:', error);
+        }
+    }
     
+    // Call the async function to initialize Web3Auth
+    initializeWeb3Auth();
+     
 
     return (      
          isPortrait ?
@@ -185,7 +247,7 @@ const FeedCard = ({ feed }) => {
                         </div>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <PayPalButton amount='10.00' currency={currency} catchError={(err) => showNotification({type: 'error', message: err})} options={{ currency, clientId, disableFunding: 'credit' }} shippingPreference='NO_SHIPPING'
+                    {/* <PayPalButton amount='10.00' currency={currency} catchError={(err) => showNotification({type: 'error', message: err})} options={{ currency, clientId, disableFunding: 'credit' }} shippingPreference='NO_SHIPPING'
                         onSuccess={(details, data) => {
                             showNotification({type: 'success', message: 'Transaction completed by ' + details.payer.name.given_name})
                             buyItem(feed.id, details.payer.email_address, details.payer.name.given_name)
@@ -193,7 +255,7 @@ const FeedCard = ({ feed }) => {
                         onError={(err) => showNotification({type: 'error', message: err})
                         
                     }
-                    />
+                    /> */}
                     <Button type='secondary' isOutline={1} text='Pay With Crypto' onClick={() => payWithWallet(feed.id)}/>
                     </div>
                 </div>

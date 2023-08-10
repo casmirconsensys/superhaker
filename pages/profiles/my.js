@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useMoralis, useMoralisCloudFunction } from 'react-moralis'
+// import { useMoralis, useMoralisCloudFunction } from 'react-moralis'
 import { useSelector, useDispatch } from 'react-redux'
 import { setPic } from '../../features/redux/user/user-slice'
 import { Dropdown } from 'react-bootstrap'
@@ -30,7 +30,7 @@ const Profile = () => {
     const uName = '@' + useSelector(state => state.user.uname)
     const uPic = useSelector(state => state.user.upic)
     const uCover = useSelector(state => state.user.ucover)
-    const uMoralisUsername = useSelector(state => state.user.moralisUserName)
+    // const uMoralisUsername = useSelector(state => state.user.moralisUserName)
     const userBio = 'User Bio'
 
     const [avatarSelected, setAvatarSelected] = useState(null)
@@ -40,8 +40,8 @@ const Profile = () => {
         !isPortrait && document.getElementById('moreOptions').classList.remove('dropdown-toggle', 'btn-success')
     }, [])
 
-    const { Moralis } = useMoralis()
-    const { data, error, isLoading, fetch } = useMoralisCloudFunction('getUserItems')
+    // const { Moralis } = useMoralis()
+    // const { data, error, isLoading, fetch } = useMoralisCloudFunction('getUserItems')
 
     const [openUploadModal, setUploadModal] = useState(false)
 
@@ -54,7 +54,7 @@ const Profile = () => {
         const avatarFile = new Moralis.File(file.name, file)
         await avatarFile.save()
         
-        const UserClass = await Moralis.Object.extend('User')
+        // const UserClass = await Moralis.Object.extend('User')
         const query = new Moralis.Query(UserClass).equalTo('username', uMoralisUsername)
         const results = await query.find()
         const user = JSON.parse(JSON.stringify(results))
