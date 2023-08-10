@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useMoralis } from 'react-moralis'
+// import { useMoralis } from 'react-moralis'
 import styles from './Upload.module.css'
 import Label from '../../basic/label/Label'
 import Textbox from '../../basic/textbox/Textbox'

@@ -1,24 +1,25 @@
 import Button from '../../basic/button/Button'
 import styles from './FeedCard.module.css'
 import fonts from '../../../styles/Fonts.module.css'
+import Link from 'next/dist/client/link'
 import { setStreamUrl } from '../../../features/redux/player-slice'
 import { useDispatch, useSelector} from 'react-redux'
 import {useState, useRef} from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { useMoralis } from 'react-moralis'
-import { marketPlaceABI } from '../../../public/contract/abi'
 import { useNotification } from 'quick-react-notification'
-import router from 'next/router'
-import { PayPalButton } from 'react-paypal-button-v2';
-import Link from 'next/dist/client/link'
-
+// import { PayPalButton } from 'react-paypal-button-v2';
+// import { auction } from '@thirdweb-dev/marketplace'; // Import the appropriate module from Thirdweb
+// import { NewAuctionListing } from '@thirdweb-dev/marketplace/types'; // Import the NewAuctionListing type from Thirdweb
+import { marketPlaceABI } from '../../../public/contract/abi'
+  import { NATIVE_TOKEN_ADDRESS } from "@thirdweb-dev/sdk";
+  import { useRouter } from "next/router";
 const clientId = '';
 const currency = 'USD';
 
 
 const FeedCard = ({ feed }) => {
 
-    const { Moralis, enableWeb3, web3 } = useMoralis()
+    // const { Moralis, enableWeb3, web3 } = useMoralis()
     const { showNotification } = useNotification();
 
     const [showAll, setShowAll] = useState(false)
@@ -27,43 +28,52 @@ const FeedCard = ({ feed }) => {
 
     const [buying, setBuying] = useState(false)
 
-    const buyItem = async (id, email, fname) => {
-        setBuying(true)
-        const ItemClass = await Moralis.Object.extend('Item')
-        const query = new Moralis.Query(ItemClass).equalTo('tokenId', id)
-        const results = await query.find()
-        const user = JSON.parse(JSON.stringify(results))
-        const objId = (user[0].objectId)
-        const userObj = await new Moralis.Query(ItemClass).get(objId)
-        userObj.set('buyerEmail', email)
-        userObj.set('buyerName', fname)
-        await userObj.save()
-        setBuying(false)
-        router.reload()
-    }
+    const buyItem = async function createDirectListing(
+        contractAddress,
+        tokenId,
+        price
+    ) {
+        try {
+            const transaction = await marketplace.direct.createListing({
+                assetContractAddress: contractAddress, // Contract Address of the NFT
+                buyoutPricePerToken: price, // Maximum price, the auction will end immediately if a user pays this price.
+                currencyContractAddress: NATIVE_TOKEN_ADDRESS, // NATIVE_TOKEN_ADDRESS is the crpyto curency that is native to the network. i.e. Goerli ETH.
+                listingDurationInSeconds: 60 * 60 * 24 * 7, // When the auction will be closed and no longer accept bids (1 Week)
+                quantity: 1, // How many of the NFTs are being listed (useful for ERC 1155 tokens)
+                startTimestamp: new Date(0), // When the listing will start
+                tokenId: tokenId, // Token ID of the NFT.
+            });
+    
+            return transaction;
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    
+      
 
     const payWithWallet = async (id) => {
-        await enableWeb3()
-        await Moralis.getChainId().then(async (data) => {
-            if (data === 1 || data === 56)
-            {
-                let amount = '0.00031'
-                if (data === 56) amount = '0.0023'
-                const options = {type: 'native', amount: Moralis.Units.ETH(amount), receiver: '0xa63F77c709e87E0d1CaC383137C568D7835d9103'}
-                let result = await Moralis.transfer(options)
-                    .then(async (data) => {
-                        buyItem(id, data.from, 'none')
-                    })
-                    .catch(async(error) => {
-                            showNotification({type: 'error', message: error.message})
-                    })
+        await enableWeb3();
+    
+        try {
+            const data = await thirdweb.getChainId();
+    
+            if (data === 1 || data === 56) {
+                let amount = '0.00031';
+                if (data === 56) amount = '0.0023';
+    
+                const options = { type: 'native', amount: thirdweb.Units.ETH(amount), receiver: '0xa63F77c709e87E0d1CaC383137C568D7835d9103' };
+                let result = await thirdweb.transfer(options);
+    
+                buyItem(id, result.from, 'none');
+            } else {
+                showNotification({ type: 'error', message: 'Make sure you are on ETH or BNB Network' });
             }
-            else
-                showNotification({type: 'error', message: 'Make sure you are on ETH or BNB Network'})
-        }).catch(async(error) => {
-            showNotification({type: 'error', message: 'Crypto wallet client not found'})
-        })
-    }
+        } catch (error) {
+            showNotification({ type: 'error', message: error.message });
+        }
+    };
+    
 
     return (      
          isPortrait ?
