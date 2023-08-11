@@ -13,7 +13,8 @@ import Loader from '../../basic/loader/Loader'
 import { useNotification } from 'quick-react-notification'
 import { tokenContractABI, marketPlaceABI } from '../../../public/contract/abi'
 import { setFile, setTokenName, setTokenDesc, setTokenUri, setTokenPrice, setTokenArtist, setTokenAlbumArt } from '../../../features/redux/upload/upload-slice'
-
+import { ZoraTestnet } from "@thirdweb-dev/chains";
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 const Upload = ( { hideModal }) => {
 
     const dispatch = useDispatch()
@@ -28,8 +29,6 @@ const Upload = ( { hideModal }) => {
     const tokenArtist = useSelector(state => state.upload.tokenArtist)
     const tokenUri = useSelector(state => state.upload.tokenUri)
     const tokenAlbumArt = useSelector(state => state.upload.tokenAlbumArt)
-    const walletAddress = web3.utils.toChecksumAddress(useSelector(state => state.user.walletAddress))
-
     const [isUploading, setisUploading] = useState(false)
     const [uploadStatus, setuploadStatus] = useState(false)
     const [uploadComplete, setuploadComplete] = useState(false)
@@ -87,8 +86,8 @@ const Upload = ( { hideModal }) => {
     const mintNft = async (metadataUrl) => {
         switch (chainId.current) {
             case 1175159915491121:
-                TOKEN_CONTRACT_ADDRESS.current = web3.utils.toChecksumAddress('0xB262E527ac2C2c788316421aD9129B5B3ccFfd0C') //SKALE 
-                MARKETPLACE_CONTRACT_ADDRESS.current = web3.utils.toChecksumAddress('0x61097306Cc1dec0069FaBbe293905204bEf2c67f') //SKALE 
+                TOKEN_CONTRACT_ADDRESS.current = web3.utils.toChecksumAddress('0x0993123cd814FcADCc72d694F7123b1827b85cAB') //ZORA 
+                MARKETPLACE_CONTRACT_ADDRESS.current = web3.utils.toChecksumAddress('0x4E1E4ceB15ab6390F35259e77dd66563B234e31D') //ZORA 
                 break;
         }
         const contract = new web3.eth.Contract(tokenContractABI, TOKEN_CONTRACT_ADDRESS.current)
@@ -148,7 +147,7 @@ const Upload = ( { hideModal }) => {
             setisUploading(true)
             const data = fileName;
             const dataName = `nftfile_${Math.floor(Math.random() * 9999999) + 1}`;
-            const nftFile = new Moralis.File(dataName, data);
+            // const nftFile = new Moralis.File(dataName, data);
             await nftFile.saveIPFS();
 
             let nftAlbumArt
@@ -168,7 +167,7 @@ const Upload = ( { hideModal }) => {
                 'image': ipfsLink,
                 'metadata': tokenUri
             };
-            const nftFileMeta = new Moralis.File('metadata.json', {base64: btoa(JSON.stringify(metadata))});
+            // const nftFileMeta = new Moralis.File('metadata.json', {base64: btoa(JSON.stringify(metadata))});
             await nftFileMeta.saveIPFS();
             const nftFileMeta_FilePath = nftFileMeta.ipfs();
             const nftFileMeta_FileHash = nftFileMeta.hash();
@@ -221,6 +220,24 @@ const Upload = ( { hideModal }) => {
             setisUploading(false)
         }
     }
+    function createDirectListing(contractAddress, tokenId, price) {
+        try {
+          const transaction = marketplace?.direct.createListing({
+            assetContractAddress: contractAddress, // Contract Address of the NFT
+            buyoutPricePerToken: price, // Maximum price, the auction will end immediately if a user pays this price.
+            currencyContractAddress: NATIVE_TOKEN_ADDRESS, // NATIVE_TOKEN_ADDRESS is the crpyto curency that is native to the network. i.e. Goerli ETH.
+            listingDurationInSeconds: 60 * 60 * 24 * 7, // When the auction will be closed and no longer accept bids (1 Week)
+            quantity: 1, // How many of the NFTs are being listed (useful for ERC 1155 tokens)
+            startTimestamp: new Date(0), // When the listing will start
+            tokenId: tokenId, // Token ID of the NFT.
+          });
+      
+          return transaction;
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      
 
     // const uploadNFT = async () => {
     //     // const id = await Moralis.getChainId().then(async (data) => {
@@ -248,41 +265,41 @@ const Upload = ( { hideModal }) => {
         }, '0x88e5ba18fd33e01cab2ea3a16843971ab01e2a13a71ac0fe149b7627e3a7b52e')
     }
 
-    const switchNetworkToSKALE = async () => {
-        await Moralis.getChainId().then( async (data) => {
-            chainId.current = data
-            if (chainId.current === 1175159915491121)
-                return
-            else {
-                await Moralis.switchNetwork(1175159915491121).then(() => {
-                    showNotification({type: 'success', message: 'You are now on the Trapchain Network!'})
-                })
-                .catch(async(error) => {
-                    if (error.code == 4001)
-                        showNotification({type: 'error', message: error.message})
-                    else{
-                        const chainId = 0x42CCD3D512F31;
-                        const chainName = 'Trapchain | SKALE Network';
-                        const currencyName = 'SKALE ETH';
-                        const currencySymbol = 'skETH';
-                        const rpcUrl = 'https://mainnet-api.skalenodes.com/v1/dazzling-gomeisa';
-                        const blockExplorerUrl = 'https://dazzling-gomeisa.explorer.mainnet.skalenodes.com';
+    // const switchNetworkToSKALE = async () => {
+    //     await Moralis.getChainId().then( async (data) => {
+    //         chainId.current = data
+    //         if (chainId.current === 1175159915491121)
+    //             return
+    //         else {
+    //             await Moralis.switchNetwork(1175159915491121).then(() => {
+    //                 showNotification({type: 'success', message: 'You are now on the Trapchain Network!'})
+    //             })
+    //             .catch(async(error) => {
+    //                 if (error.code == 4001)
+    //                     showNotification({type: 'error', message: error.message})
+    //                 else{
+    //                     const chainId = 0x42CCD3D512F31;
+    //                     const chainName = 'Trapchain | ZORA Network';
+    //                     const currencyName = 'ZORA ETH';
+    //                     const currencySymbol = 'skETH';
+    //                     const rpcUrl = 'https://mainnet-api.skalenodes.com/v1/dazzling-gomeisa';
+    //                     const blockExplorerUrl = 'https://dazzling-gomeisa.explorer.mainnet.skalenodes.com';
 
 
-                        await Moralis.addNetwork(
-                            chainId, 
-                            chainName, 
-                            currencyName, 
-                            currencySymbol, 
-                            rpcUrl,
-                            blockExplorerUrl
-                        );
-                    }
-                })                      
-            }
-        })
+                        // await Moralis.addNetwork(
+                        //     chainId, 
+                        //     chainName, 
+                        //     currencyName, 
+                        //     currencySymbol, 
+                        //     rpcUrl,
+                        //     blockExplorerUrl
+                        // );
+                //     }
+                // })                      
+    //         }
+    //     })
         
-    }
+    // }
    
     return (
             <div className={styles.main}>

@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "export THIRDWEB_CLI_SKIP_INTRO=true && npx --yes thirdweb@latest generate && export THIRDWEB_CLI_SKIP_INTRO=true && npx --yes thirdweb@latest generate"
   },
   "dependencies": {
     "@paypal/react-paypal-js": "^7.4.2",

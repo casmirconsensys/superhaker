@@ -74,67 +74,67 @@ const FeedCard = ({ feed }) => {
             showNotification({ type: 'error', message: error.message });
         }
     };
-    // Options for Web3Auth
-    async function initializeWeb3Auth() {
-        // Options for Web3Auth
-        const options = {
-            clientId: 'YOUR_WEB3_AUTH_CLIENT_ID',
-            web3AuthNetwork: 'testnet',
-            chainConfig: {
-                chainNamespace: CHAIN_NAMESPACES.EIP155,
-                chainId: '0x5',
-                rpcTarget: 'https://rpc.ankr.com/eth_goerli'
-            },
-            uiConfig: {
-                theme: 'dark',
-                loginMethodsOrder: ['google', 'facebook']
-            }
-        };
+    // // Options for Web3Auth
+    // async function initializeWeb3Auth() {
+    //     // Options for Web3Auth
+    //     const options = {
+    //         clientId: 'YOUR_WEB3_AUTH_CLIENT_ID',
+    //         web3AuthNetwork: 'testnet',
+    //         chainConfig: {
+    //             chainNamespace: process.env.CHAIN_NAMESPACES.EIP155,
+    //             chainId: '0x5',
+    //             rpcTarget: 'https://rpc.ankr.com/eth_goerli'
+    //         },
+    //         uiConfig: {
+    //             theme: 'dark',
+    //             loginMethodsOrder: ['google', 'facebook']
+    //         }
+    //     };
         
-        // Adapter configurations
-        const modalConfig = {
-            [WALLET_ADAPTERS.TORUS_EVM]: {
-                label: 'torus',
-                showOnModal: false
-            },
-            [WALLET_ADAPTERS.METAMASK]: {
-                label: 'metamask',
-                showOnDesktop: true,
-                showOnMobile: false
-            }
-        };
+        // // Adapter configurations
+        // const modalConfig = {
+        //     [WALLET_ADAPTERS.TORUS_EVM]: {
+        //         label: 'torus',
+        //         showOnModal: false
+        //     },
+        //     [WALLET_ADAPTERS.METAMASK]: {
+        //         label: 'metamask',
+        //         showOnDesktop: true,
+        //         showOnMobile: false
+        //     }
+        // };
         
-        // Openlogin adapter
-        const openloginAdapter = new OpenloginAdapter({
-            loginSettings: {
-                mfaLevel: 'mandatory'
-            },
-            adapterSettings: {
-                uxMode: 'popup',
-                whiteLabel: {
-                    name: 'Safe'
-                }
-            }
-        });
+        // // Openlogin adapter
+        // const openloginAdapter = new OpenloginAdapter({
+        //     loginSettings: {
+        //         mfaLevel: 'mandatory'
+        //     },
+        //     adapterSettings: {
+        //         uxMode: 'popup',
+        //         whiteLabel: {
+        //             name: 'Safe'
+        //         }
+        //     }
+        // });
         
-        // Web3Auth configuration
-        const web3AuthConfig = {
-            txServiceUrl: 'https://safe-transaction-goerli.safe.global'
-        };
+        // // Web3Auth configuration
+        // const web3AuthConfig = {
+        //     txServiceUrl: 'https://safe-transaction-goerli.safe.global'
+        // };
         
-        // Instantiate and initialize the pack
-        const web3AuthModalPack = new Web3AuthModalPack(web3AuthConfig);
+    //     // Instantiate and initialize the pack
+    //     const web3AuthModalPack = new Web3AuthModalPack(web3AuthConfig);
         
-        try {
-            await web3AuthModalPack.init({ options, adapters: [openloginAdapter], modalConfig });
-            console.log('Web3Auth initialized successfully.');
-        } catch (error) {
-            console.error('Error initializing Web3Auth:', error);
-        }
-    }
+    //     try {
+    //         // await web3AuthModalPack.init({ options, adapters: [openloginAdapter], modalConfig });
+    //         console.log('Web3Auth initialized successfully.');
+    //     } catch (error) {
+    //         console.error('Error initializing Web3Auth:', error);
+    //     }
+    // }
     
-    // Call the async function to initialize Web3Auth
-    initializeWeb3Auth();
+    // // Call the async function to initialize Web3Auth
+    // initializeWeb3Auth();
      
 
     return (      
