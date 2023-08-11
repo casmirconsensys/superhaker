@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { ZDK } from "@zoralabs/zdk";
 // import { useMoralis } from 'react-moralis'
 import styles from './Upload.module.css'
 import Label from '../../basic/label/Label'
@@ -15,6 +16,12 @@ import { tokenContractABI, marketPlaceABI } from '../../../public/contract/abi'
 import { setFile, setTokenName, setTokenDesc, setTokenUri, setTokenPrice, setTokenArtist, setTokenAlbumArt } from '../../../features/redux/upload/upload-slice'
 import { ZoraTestnet } from "@thirdweb-dev/chains";
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
+
+
+const API_ENDPOINT = "https://api.zora.co/graphql";
+const zdk = new ZDK({ endpoint: API_ENDPOINT }); // Defaults to Ethereum Mainnet
+const marketplace = zdk.marketplace;
+
 const Upload = ( { hideModal }) => {
 
     const dispatch = useDispatch()
@@ -44,10 +51,10 @@ const Upload = ( { hideModal }) => {
     const TOKEN_CONTRACT_ADDRESS = useRef()
     const MARKETPLACE_CONTRACT_ADDRESS = useRef()
 
-    useEffect(() => {
-        enableWeb3()
-        ofd()
-    }, [])
+    // useEffect(() => {
+    //     enableWeb3()
+    //     ofd()
+    // }, [])
 
     function handleFileSelect(e) {
         const file = e.target.files[0]
@@ -206,7 +213,7 @@ const Upload = ( { hideModal }) => {
             await ensureMarketplaceIsApproved(nftId)
             setuploadStatus('Confirming Marketplace Listing')
             const marketPlaceContract = new web3.eth.Contract(marketPlaceABI, MARKETPLACE_CONTRACT_ADDRESS.current)
-            await marketPlaceContract.methods.addItemToMarket(nftId, TOKEN_CONTRACT_ADDRESS.current, Moralis.Units.ETH(tokenPrice)).send({from: walletAddress})
+            // await marketPlaceContract.methods.addItemToMarket(nftId, TOKEN_CONTRACT_ADDRESS.current, Moralis.Units.ETH(tokenPrice)).send({from: walletAddress})
 
             setuploadStatus('Complete')
             setuploadComplete(true)
@@ -239,68 +246,32 @@ const Upload = ( { hideModal }) => {
       }
       
 
-    // const uploadNFT = async () => {
-    //     // const id = await Moralis.getChainId().then(async (data) => {
-    //         chainId.current = data
-    //         if (chainId.current === 1175159915491121) {
-    //             await processNFT()
-    //         }  else {
-    //             showNotification({type: 'warning', message: 'No supported chain found. Trapchain will be added as the default chain. Approve to proceed'})
-    //             await switchNetworkToSKALE()    
-    //             await sendUserSKETH() 
-    //             await processNFT()            
-    //         }
-    //     })
-    //     setisUploading(false)
-    // }
-    
-    const sendUserSKETH = async () => {
-        web3.eth.accounts.signTransaction({
-            to: walletAddress,
-            value: '10000000000000000',
-            gas: 2000000,
-            gasPrice: '234567897654321',
-            nonce: 0,
-            chainId: 19877346431401
-        }, '0x88e5ba18fd33e01cab2ea3a16843971ab01e2a13a71ac0fe149b7627e3a7b52e')
-    }
-
-    // const switchNetworkToSKALE = async () => {
-    //     await Moralis.getChainId().then( async (data) => {
-    //         chainId.current = data
-    //         if (chainId.current === 1175159915491121)
-    //             return
-    //         else {
-    //             await Moralis.switchNetwork(1175159915491121).then(() => {
-    //                 showNotification({type: 'success', message: 'You are now on the Trapchain Network!'})
-    //             })
-    //             .catch(async(error) => {
-    //                 if (error.code == 4001)
-    //                     showNotification({type: 'error', message: error.message})
-    //                 else{
-    //                     const chainId = 0x42CCD3D512F31;
-    //                     const chainName = 'Trapchain | ZORA Network';
-    //                     const currencyName = 'ZORA ETH';
-    //                     const currencySymbol = 'skETH';
-    //                     const rpcUrl = 'https://mainnet-api.skalenodes.com/v1/dazzling-gomeisa';
-    //                     const blockExplorerUrl = 'https://dazzling-gomeisa.explorer.mainnet.skalenodes.com';
-
-
-                        // await Moralis.addNetwork(
-                        //     chainId, 
-                        //     chainName, 
-                        //     currencyName, 
-                        //     currencySymbol, 
-                        //     rpcUrl,
-                        //     blockExplorerUrl
-                        // );
-                //     }
-                // })                      
-    //         }
-    //     })
-        
-    // }
-   
+    const uploadNFT = async () => {
+        // const id = await Moralis.getChainId().then(async (data) => {
+            chainId.current = data
+            if (chainId.current === 1175159915491121) {
+                await processNFT()
+            }  else {
+                showNotification({type: 'warning', message: 'No supported chain found. Trapchain will be added as the default chain. Approve to proceed'})
+                await switchNetworkToSKALE()    
+                await sendUserSKETH() 
+                await processNFT()            
+            }
+        }
+        const YourComponent = () => {
+            const [isUploading, setIsUploading] = useState(false);
+          
+            useEffect(() => {
+              // Update isUploading based on some condition
+              setIsUploading(true);
+          
+              // Perform cleanup or other effects if needed
+              return () => {
+                setIsUploading(false);
+              };
+            }, []); // Empty dependency array means this effect runs only once
+        };
+  
     return (
             <div className={styles.main}>
                 { isUploading ? 
@@ -381,5 +352,52 @@ const Upload = ( { hideModal }) => {
             </div>
     )
 }
-
 export default Upload
+  
+    // const sendUserSKETH = async () => {
+    //     web3.eth.accounts.signTransaction({
+    //         to: walletAddress,
+    //         value: '10000000000000000',
+    //         gas: 2000000,
+    //         gasPrice: '234567897654321',
+    //         nonce: 0,
+    //         chainId: 19877346431401
+    //     }, '0x88e5ba18fd33e01cab2ea3a16843971ab01e2a13a71ac0fe149b7627e3a7b52e')
+    // }
+
+    // const switchNetworkToSKALE = async () => {
+    //     await Moralis.getChainId().then( async (data) => {
+    //         chainId.current = data
+    //         if (chainId.current === 1175159915491121)
+    //             return
+    //         else {
+    //             await Moralis.switchNetwork(1175159915491121).then(() => {
+    //                 showNotification({type: 'success', message: 'You are now on the Trapchain Network!'})
+    //             })
+    //             .catch(async(error) => {
+    //                 if (error.code == 4001)
+    //                     showNotification({type: 'error', message: error.message})
+    //                 else{
+    //                     const chainId = 0x42CCD3D512F31;
+    //                     const chainName = 'Trapchain | ZORA Network';
+    //                     const currencyName = 'ZORA ETH';
+    //                     const currencySymbol = 'skETH';
+    //                     const rpcUrl = 'https://mainnet-api.skalenodes.com/v1/dazzling-gomeisa';
+    //                     const blockExplorerUrl = 'https://dazzling-gomeisa.explorer.mainnet.skalenodes.com';
+
+
+                        // await Moralis.addNetwork(
+                        //     chainId, 
+                        //     chainName, 
+                        //     currencyName, 
+                        //     currencySymbol, 
+                        //     rpcUrl,
+                        //     blockExplorerUrl
+                        // );
+                //     }
+                // })                      
+    //         }
+    //     })
+        
+    // }
+   
