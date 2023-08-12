@@ -20,13 +20,14 @@ import MobileBottomNav from '../components/sections/mobileNav/MobileBottomNav'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { feedData, waveItems } from '../public/common/items'
-import {
-    ConnectWallet, 
-    useAddress, 
-    useContract,
-    useNetwork,
-    useNetworkMismatch
-  } from "@thirdweb-dev/react";
+// import {
+//     ConnectWallet, 
+//     useAddress, 
+//     useContract,
+//     useNetwork,
+//     useNetworkMismatch
+//   } from "@thirdweb-dev/react";
+//   import { createClient } from '@supabase/supabase-js';
 
 const Feed = () => {
     const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })

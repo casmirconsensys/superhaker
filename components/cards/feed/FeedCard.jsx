@@ -15,8 +15,8 @@ import { WALLET_ADAPTERS } from '@safe-global/auth-kit';
 // import { auction } from '@thirdweb-dev/marketplace'; // Import the appropriate module from Thirdweb
 // import { NewAuctionListing } from '@thirdweb-dev/marketplace/types'; // Import the NewAuctionListing type from Thirdweb
 import { marketPlaceABI } from '../../../public/contract/abi'
-  import { NATIVE_TOKEN_ADDRESS } from "@thirdweb-dev/sdk";
-  import { useRouter } from "next/router";
+//   import { NATIVE_TOKEN_ADDRESS } from "@thirdweb-dev/sdk";
+import { useRouter } from "next/router";
 const clientId = '';
 const currency = 'USD';
 
@@ -161,7 +161,7 @@ const FeedCard = ({ feed }) => {
                         </div>
                         <h3 className={styles.playlistTitle}>{feed.title} {feed.artist && <span className={styles.artist}>{feed.artist}</span>}</h3>
                         <h4 className={styles.username}>{feed.username}</h4>
-                        <h5 className={styles.username} style={{marginBottom: '28px'}}>{feed.description.slice(0, 35)}...</h5>
+                        {/* <h5 className={styles.username} style={{marginBottom: '28px'}}>{feed.description.slice(0, 35)}...</h5> */}
                     </div>
                     
                 </div>
@@ -183,14 +183,14 @@ const FeedCard = ({ feed }) => {
                 </div>
                 <div style={{marginBottom: '16px'}}></div>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <PayPalButton amount='10.00' currency={currency} catchError={(err) => showNotification({type: 'error', message: err})} options={{ currency, clientId, disableFunding: 'credit' }} shippingPreference='NO_SHIPPING'
+                    {/* <PayPalButton amount='10.00' currency={currency} catchError={(err) => showNotification({type: 'error', message: err})} options={{ currency, clientId, disableFunding: 'credit' }} shippingPreference='NO_SHIPPING'
                         onSuccess={(details, data) => {
                             showNotification({type: 'success', message: 'Transaction completed by ' + details.payer.name.given_name})
                             buyItem(feed.id, details.payer.email_address, details.payer.name.given_name)
                         }}
                         onError={(err) => showNotification({type: 'error', message: err})                    }
                     />
-                    <Button type='secondary' isOutline={1} text='Pay With Crypto' onClick={() => payWithWallet(feed.id)}/>
+                    <Button type='secondary' isOutline={1} text='Pay With Crypto' onClick={() => payWithWallet(feed.id)}/> */}
                     </div>
                 {feed.feedType === 'Playlist' &&
                 <>

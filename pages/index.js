@@ -9,7 +9,7 @@ import fonts from '../styles/Fonts.module.css'
 import { Waitlist } from 'waitlistapi'
 import userflow from 'userflow.js'
 import { useEffect } from 'react';
-import { useContract, useNFTs, ThirdwebNftMedia } from "@thirdweb-dev/react";
+// import { useContract, useNFTs, ThirdwebNftMedia } from "@thirdweb-dev/react";
 
 
 const ThemeButton = dynamic(() => import('../components/basic/ThemeButton'), {
