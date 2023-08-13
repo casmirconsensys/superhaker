@@ -1,69 +1,141 @@
 import Button from '../../basic/button/Button'
 import styles from './FeedCard.module.css'
 import fonts from '../../../styles/Fonts.module.css'
+import Link from 'next/dist/client/link'
 import { setStreamUrl } from '../../../features/redux/player-slice'
 import { useDispatch, useSelector} from 'react-redux'
 import {useState, useRef} from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { useMoralis } from 'react-moralis'
-import { marketPlaceABI } from '../../../public/contract/abi'
 import { useNotification } from 'quick-react-notification'
-import router from 'next/router'
-import { PayPalButton } from 'react-paypal-button-v2';
-import Link from 'next/dist/client/link'
-
+import { Web3AuthOptions } from '@web3auth/modal'
+import { OpenloginAdapter } from '@web3auth/openlogin-adapter'
+import { Web3AuthModalPack, Web3AuthConfig, CHAIN_NAMESPACES } from '@safe-global/auth-kit';
+import { WALLET_ADAPTERS } from '@safe-global/auth-kit';
+// import { PayPalButton } from 'react-paypal-button-v2';
+// import { auction } from '@thirdweb-dev/marketplace'; // Import the appropriate module from Thirdweb
+// import { NewAuctionListing } from '@thirdweb-dev/marketplace/types'; // Import the NewAuctionListing type from Thirdweb
+import { marketPlaceABI } from '../../../public/contract/abi'
+//   import { NATIVE_TOKEN_ADDRESS } from "@thirdweb-dev/sdk";
+import { useRouter } from "next/router";
 const clientId = '';
 const currency = 'USD';
 
 
 const FeedCard = ({ feed }) => {
 
-    const { Moralis, enableWeb3, web3 } = useMoralis()
+    // const { Moralis, enableWeb3, web3 } = useMoralis()
     const { showNotification } = useNotification();
-
     const [showAll, setShowAll] = useState(false)
     const dispatch = useDispatch()
     const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
-
     const [buying, setBuying] = useState(false)
 
-    const buyItem = async (id, email, fname) => {
-        setBuying(true)
-        const ItemClass = await Moralis.Object.extend('Item')
-        const query = new Moralis.Query(ItemClass).equalTo('tokenId', id)
-        const results = await query.find()
-        const user = JSON.parse(JSON.stringify(results))
-        const objId = (user[0].objectId)
-        const userObj = await new Moralis.Query(ItemClass).get(objId)
-        userObj.set('buyerEmail', email)
-        userObj.set('buyerName', fname)
-        await userObj.save()
-        setBuying(false)
-        router.reload()
-    }
-
+    const buyItem = async function createDirectListing(
+        contractAddress,
+        tokenId,
+        price
+    ) {
+        try {
+            const transaction = await marketplace.direct.createListing({
+                assetContractAddress: contractAddress, // Contract Address of the NFT
+                buyoutPricePerToken: price, // Maximum price, the auction will end immediately if a user pays this price.
+                currencyContractAddress: NATIVE_TOKEN_ADDRESS, // NATIVE_TOKEN_ADDRESS is the crpyto curency that is native to the network. i.e. Goerli ETH.
+                listingDurationInSeconds: 60 * 60 * 24 * 7, // When the auction will be closed and no longer accept bids (1 Week)
+                quantity: 1, // How many of the NFTs are being listed (useful for ERC 1155 tokens)
+                startTimestamp: new Date(0), // When the listing will start
+                tokenId: tokenId, // Token ID of the NFT.
+            });
+    
+            return transaction;
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    
+    
     const payWithWallet = async (id) => {
-        await enableWeb3()
-        await Moralis.getChainId().then(async (data) => {
-            if (data === 1 || data === 56)
-            {
-                let amount = '0.00031'
-                if (data === 56) amount = '0.0023'
-                const options = {type: 'native', amount: Moralis.Units.ETH(amount), receiver: '0xa63F77c709e87E0d1CaC383137C568D7835d9103'}
-                let result = await Moralis.transfer(options)
-                    .then(async (data) => {
-                        buyItem(id, data.from, 'none')
-                    })
-                    .catch(async(error) => {
-                            showNotification({type: 'error', message: error.message})
-                    })
+        await enableWeb3();
+    
+        try {
+            const data = await thirdweb.getChainId();
+    
+            if (data === 1 || data === 56) {
+                let amount = '0.00031';
+                if (data === 56) amount = '0.0023';
+    
+                const options = { type: 'native', amount: thirdweb.Units.ETH(amount), receiver: '0xa63F77c709e87E0d1CaC383137C568D7835d9103' };
+                let result = await thirdweb.transfer(options);
+    
+                buyItem(id, result.from, 'none');
+            } else {
+                showNotification({ type: 'error', message: 'Make sure you are on ETH or BASE Network' });
             }
-            else
-                showNotification({type: 'error', message: 'Make sure you are on ETH or BNB Network'})
-        }).catch(async(error) => {
-            showNotification({type: 'error', message: 'Crypto wallet client not found'})
-        })
-    }
+        } catch (error) {
+            showNotification({ type: 'error', message: error.message });
+        }
+    };
+    // // Options for Web3Auth
+    // async function initializeWeb3Auth() {
+    //     // Options for Web3Auth
+    //     const options = {
+    //         clientId: 'YOUR_WEB3_AUTH_CLIENT_ID',
+    //         web3AuthNetwork: 'testnet',
+    //         chainConfig: {
+    //             chainNamespace: process.env.CHAIN_NAMESPACES.EIP155,
+    //             chainId: '0x5',
+    //             rpcTarget: 'https://rpc.ankr.com/eth_goerli'
+    //         },
+    //         uiConfig: {
+    //             theme: 'dark',
+    //             loginMethodsOrder: ['google', 'facebook']
+    //         }
+    //     };
+        
+        // // Adapter configurations
+        // const modalConfig = {
+        //     [WALLET_ADAPTERS.TORUS_EVM]: {
+        //         label: 'torus',
+        //         showOnModal: false
+        //     },
+        //     [WALLET_ADAPTERS.METAMASK]: {
+        //         label: 'metamask',
+        //         showOnDesktop: true,
+        //         showOnMobile: false
+        //     }
+        // };
+        
+        // // Openlogin adapter
+        // const openloginAdapter = new OpenloginAdapter({
+        //     loginSettings: {
+        //         mfaLevel: 'mandatory'
+        //     },
+        //     adapterSettings: {
+        //         uxMode: 'popup',
+        //         whiteLabel: {
+        //             name: 'Safe'
+        //         }
+        //     }
+        // });
+        
+        // // Web3Auth configuration
+        // const web3AuthConfig = {
+        //     txServiceUrl: 'https://safe-transaction-goerli.safe.global'
+        // };
+        
+    //     // Instantiate and initialize the pack
+    //     const web3AuthModalPack = new Web3AuthModalPack(web3AuthConfig);
+        
+    //     try {
+    //         // await web3AuthModalPack.init({ options, adapters: [openloginAdapter], modalConfig });
+    //         console.log('Web3Auth initialized successfully.');
+    //     } catch (error) {
+    //         console.error('Error initializing Web3Auth:', error);
+    //     }
+    // }
+    
+    // // Call the async function to initialize Web3Auth
+    // initializeWeb3Auth();
+     
 
     return (      
          isPortrait ?
@@ -89,7 +161,7 @@ const FeedCard = ({ feed }) => {
                         </div>
                         <h3 className={styles.playlistTitle}>{feed.title} {feed.artist && <span className={styles.artist}>{feed.artist}</span>}</h3>
                         <h4 className={styles.username}>{feed.username}</h4>
-                        <h5 className={styles.username} style={{marginBottom: '28px'}}>{feed.description.slice(0, 35)}...</h5>
+                        {/* <h5 className={styles.username} style={{marginBottom: '28px'}}>{feed.description.slice(0, 35)}...</h5> */}
                     </div>
                     
                 </div>
@@ -111,14 +183,14 @@ const FeedCard = ({ feed }) => {
                 </div>
                 <div style={{marginBottom: '16px'}}></div>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <PayPalButton amount='10.00' currency={currency} catchError={(err) => showNotification({type: 'error', message: err})} options={{ currency, clientId, disableFunding: 'credit' }} shippingPreference='NO_SHIPPING'
+                    {/* <PayPalButton amount='10.00' currency={currency} catchError={(err) => showNotification({type: 'error', message: err})} options={{ currency, clientId, disableFunding: 'credit' }} shippingPreference='NO_SHIPPING'
                         onSuccess={(details, data) => {
                             showNotification({type: 'success', message: 'Transaction completed by ' + details.payer.name.given_name})
                             buyItem(feed.id, details.payer.email_address, details.payer.name.given_name)
                         }}
                         onError={(err) => showNotification({type: 'error', message: err})                    }
                     />
-                    <Button type='secondary' isOutline={1} text='Pay With Crypto' onClick={() => payWithWallet(feed.id)}/>
+                    <Button type='secondary' isOutline={1} text='Pay With Crypto' onClick={() => payWithWallet(feed.id)}/> */}
                     </div>
                 {feed.feedType === 'Playlist' &&
                 <>
@@ -175,7 +247,7 @@ const FeedCard = ({ feed }) => {
                         </div>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <PayPalButton amount='10.00' currency={currency} catchError={(err) => showNotification({type: 'error', message: err})} options={{ currency, clientId, disableFunding: 'credit' }} shippingPreference='NO_SHIPPING'
+                    {/* <PayPalButton amount='10.00' currency={currency} catchError={(err) => showNotification({type: 'error', message: err})} options={{ currency, clientId, disableFunding: 'credit' }} shippingPreference='NO_SHIPPING'
                         onSuccess={(details, data) => {
                             showNotification({type: 'success', message: 'Transaction completed by ' + details.payer.name.given_name})
                             buyItem(feed.id, details.payer.email_address, details.payer.name.given_name)
@@ -183,7 +255,7 @@ const FeedCard = ({ feed }) => {
                         onError={(err) => showNotification({type: 'error', message: err})
                         
                     }
-                    />
+                    /> */}
                     <Button type='secondary' isOutline={1} text='Pay With Crypto' onClick={() => payWithWallet(feed.id)}/>
                     </div>
                 </div>

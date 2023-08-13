@@ -9,10 +9,20 @@ import fonts from '../styles/Fonts.module.css'
 import { Waitlist } from 'waitlistapi'
 import userflow from 'userflow.js'
 import { useEffect } from 'react';
+// import { useContract, useNFTs, ThirdwebNftMedia } from "@thirdweb-dev/react";
+
 
 const ThemeButton = dynamic(() => import('../components/basic/ThemeButton'), {
   ssr: false,
 });
+// const { data: name, isLoading: loadingName } = useContractRead(
+//   contract,
+//   "name", // The name of the view/mapping/variable on your contract
+// );
+// const { mutate: setName, isLoading: settingName } = useContractWrite(
+//   contract,
+//   "setName", // The name of the function on your contract
+// );
 
   // userflow.init('USERFLOW_TOKEN')
   // userflow.identify('USER_ID', {
@@ -23,6 +33,17 @@ const ThemeButton = dynamic(() => import('../components/basic/ThemeButton'), {
 
 
 export default function Home() {
+  // const { contract } = useContract("<CONTRACT_ADDRESS>");
+  // const { data: name, isLoading: loadingName } = useContractRead(
+  //   contract,
+  //   "name", // The name of the view/mapping/variable on your contract
+  // );
+  // const { mutate: setName, isLoading: settingName } = useContractWrite(
+  //   contract,
+  //   "setName", // The name of the function on your contract
+  // );
+  // const { data: nfts, isLoading: isReadingNfts } = useNFTs(contract);
+
     return (
             <Layout backgroundImage='home'>
               <nav className={styles.navbar}>
@@ -31,9 +52,10 @@ export default function Home() {
                         <div className={styles.buttons}>
                           <ThemeButton/>
                           <span className='margin-right-wide'></span>
-                          <Button isLink={1} href='/accounts/signin' bg='dark' text='Claim Drop'/>
+                          <Button isLink={1} href='/feed' bg='dark' text='Claim Drop'/>
                           <span className='margin-right-wide'></span>
                           <Button isLink={1} href='/accounts/signin' bg='greenToPurple' spread='gradient' text='Login'/>
+                          
                         </div>
                     </div>
                 </nav>       

@@ -27,7 +27,7 @@ function RouteGuard({ children }) {
 
     function authCheck(url) {
         // const publicPaths = ['/accounts/signin', '/accounts/signout', '/accounts/signup', '/feed', '/']
-        const publicPaths = ['/willietaylor', '/', '/privacypolicy', '/faq', '/livefromharlem', '/accounts/signin', '/accounts/signout', '/accounts/signup']
+        const publicPaths = ['/feed', '/', '/privacypolicy', '/faq', '/accounts/signin', '/accounts/signout', '/accounts/signup']
         const path = url.split('?')[0]
         // console.log(url);
         // console.log(router.query.r)
@@ -39,7 +39,7 @@ function RouteGuard({ children }) {
         if (!isLoggedIn && !publicPaths.includes(path)) {
             setAuthorized(false)
             router.push({
-                pathname: '/livefromharlem',
+                pathname: '/feed',
                 // query: { r: router.asPath }
             });
         }else

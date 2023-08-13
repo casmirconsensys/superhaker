@@ -2,9 +2,9 @@ import Link from 'next/link'
 import Layout from '../../components/Layout'
 import LAccountsCol from '../../components/sections/LAccountsCol'
 import RAccountsCol from '../../components/sections/racol/RAccountsCol'
-import { useMoralis } from 'react-moralis';
+// import { useMoralis } from 'react-moralis';
 import { useRouter } from 'next/router';
-import { setMoralisUserName, setUserLoggedIn, setWalletAddress } from '../../features/redux/user/user-slice'
+// import { setMoralisUserName, setUserLoggedIn, setWalletAddress } from '../../features/redux/user/user-slice'
 import { useDispatch } from 'react-redux'
 import fonts from '../../styles/Fonts.module.css'
 import Button from '../../components/basic/button/Button'
@@ -12,12 +12,12 @@ import styles from '../../styles/Accounts.module.css'
 
 const Signout = () => {
 
-    const { isLoggingOut, logout } = useMoralis()
+    // const { isLoggingOut, logout } = useMoralis()
     const router = useRouter()
     const dispatch = useDispatch()
     const Logout = () => {
         dispatch(setUserLoggedIn(false))
-        dispatch(setMoralisUserName(''))
+        // dispatch(setMoralisUserName(''))
         dispatch(setWalletAddress(''))
         logout().then(() => {
             router.push('/')

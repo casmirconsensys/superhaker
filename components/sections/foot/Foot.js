@@ -5,7 +5,7 @@ import Link from "next/dist/client/link"
 const Foot = ( {position} ) => {
     return (
             <div style={{position: position}} className={`color-subtitle ${fonts.mont} ${styles.footerContainer}`}>
-                <p>© 2021 360NFT</p>
+                <p>© 2023 360NFT</p>
                 <Link href='/privacypolicy'><a style={{textDecoration: 'none'}}>Terms &amp; conditions</a></Link>
             </div>
 

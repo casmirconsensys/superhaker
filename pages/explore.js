@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { useMoralisCloudFunction } from 'react-moralis'
+// import { useMoralisCloudFunction } from 'react-moralis'
 import { useSelector } from 'react-redux'
 import Layout from '../components/Layout'
 import FeedCard from '../components/cards/feed/FeedCard'
@@ -31,8 +31,8 @@ const Explore = () => {
     const [filterValue, setFilterValue] = useState('All')
     const [filteredData, setFilteredData] = useState(feedData);
     const [currentSearch, setcurrentSearch] = useState();
-    const { data: feedData, error, isLoading, fetch } = useMoralisCloudFunction('getAllItems')
-    const { data: itemsForSale, fetch: fetchItemsForSale } = useMoralisCloudFunction('getItemsForSale')
+    // const { data: feedData, error, isLoading, fetch } = useMoralisCloudFunction('getAllItems')
+    // const { data: itemsForSale, fetch: fetchItemsForSale } = useMoralisCloudFunction('getItemsForSale')
     // console.log(itemsForSale);
     // console.log(feedData);
 

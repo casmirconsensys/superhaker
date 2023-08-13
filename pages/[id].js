@@ -15,7 +15,7 @@ import fonts from '../styles/Fonts.module.css'
 import { feedData, suggestions } from '../public/common/items'
 import { useMediaQuery } from 'react-responsive'
 import { useState, useEffect } from 'react'
-import { useMoralis, useMoralisCloudFunction } from 'react-moralis'
+// import { useMoralis, useMoralisCloudFunction } from 'react-moralis'
 import { useSelector, useDispatch } from 'react-redux'
 import { setPic } from '../features/redux/user/user-slice'
 import { Dropdown } from 'react-bootstrap'
@@ -30,7 +30,7 @@ const UserProfile = () => {
     const uName = '@' + useSelector(state => state.user.uname)
     const uPic = useSelector(state => state.user.upic)
     const uCover = useSelector(state => state.user.ucover)
-    const uMoralisUsername = useSelector(state => state.user.moralisUserName)
+    // const uMoralisUsername = useSelector(state => state.user.moralisUserName)
     const userBio = 'User Bio'
 
     const [avatarSelected, setAvatarSelected] = useState(null)
@@ -40,8 +40,8 @@ const UserProfile = () => {
         !isPortrait && document.getElementById('moreOptions').classList.remove('dropdown-toggle', 'btn-success')
     }, [])
 
-    const { Moralis } = useMoralis()
-    const { data, error, isLoading, fetch } = useMoralisCloudFunction('getUserItems')
+    // const { Moralis } = useMoralis()
+    // const { data, error, isLoading, fetch } = useMoralisCloudFunction('getUserItems')
     // const { data: itemsForSale, fetch: fetchItemsForSale } = useMoralisCloudFunction('getItemsForSale')
     // console.table(itemsForSale);
 
@@ -57,7 +57,7 @@ const UserProfile = () => {
         await avatarFile.save()
         
         const UserClass = await Moralis.Object.extend('User')
-        const query = new Moralis.Query(UserClass).equalTo('username', uMoralisUsername)
+        // const query = new Moralis.Query(UserClass).equalTo('username', uMoralisUsername)
         const results = await query.find()
         const user = JSON.parse(JSON.stringify(results))
         const objId = (user[0].objectId)
@@ -74,7 +74,7 @@ const UserProfile = () => {
     }
 
     const handleCoverSelect = async (e) => {
-        const chainId = await Moralis.getChainId()
+        // const chainId = await Moralis.getChainId()
         console.log('chain', chainId); // 56
     }
 

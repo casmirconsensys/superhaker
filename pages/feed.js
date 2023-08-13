@@ -20,15 +20,22 @@ import MobileBottomNav from '../components/sections/mobileNav/MobileBottomNav'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { feedData, waveItems } from '../public/common/items'
-
+// import {
+//     ConnectWallet, 
+//     useAddress, 
+//     useContract,
+//     useNetwork,
+//     useNetworkMismatch
+//   } from "@thirdweb-dev/react";
+//   import { createClient } from '@supabase/supabase-js';
 
 const Feed = () => {
     const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
-    const isLoggedIn = useSelector(state => state.user.isLoggedIn)
+    // const isLoggedIn = useSelector(state => state.user.isLoggedIn)
     const router = useRouter()
 
-    if (!isLoggedIn)
-        router.push('/accounts/signin')
+    // if (!isLoggedIn)
+    //     router.push('/accounts/signin')
 
    
 
@@ -127,26 +134,26 @@ const Feed = () => {
                         <ul className={styles.tokenSection}>
 
                             <li className={styles.tokenItem}>
-                                <img src='https://trapchain.herokuapp.com/static/GHerbo_avatar.png' className='token-image'/>
-                                <p className={styles.tokenItemText}>GHerbo</p>
+                                <img src='https://ipfs.io/ipfs/QmZVF237kpkgc5EASeWczMJ2CiQE2mDu6sgDXZABFPz3ut' className='token-image'/>
+                                <p className={styles.tokenItemText}>6ix9ine</p>
                                 <a href='#' className='stretched-link'></a>
                             </li>
                             
                             <li className={styles.tokenItem}>
-                                <img src='https://trapchain.herokuapp.com/static/6lack_avatar.png' className='token-image'/>
-                                <p className={styles.tokenItemText}>6lack</p>
+                                <img src='https://ipfs.io/ipfs/QmQrzVCu84ezign2vrGdYik12ezsGu9rLvnGHCGScw9mXg' className='token-image'/>
+                                <p className={styles.tokenItemText}>GucciMane</p>
                                 <a href='#' className='stretched-link'></a>
                             </li>
 
                             <li className={styles.tokenItem}>
-                                <img src='https://trapchain.herokuapp.com/static/dreezy_avatar.png' className='token-image'/>
-                                <p className={styles.tokenItemText}>Dreezy</p>
+                                <img src='https://ipfs.io/ipfs/QmdUzLgetCsDT8CzDZVqrQj82shx8kSf9npV8pVxZz1gUx' className='token-image'/>
+                                <p className={styles.tokenItemText}>Lil'Durkß</p>
                                 <a href='#' className='stretched-link'></a>
                             </li>
 
                             <li className={styles.tokenItem}>
-                                <img src='https://trapchain.herokuapp.com/static/julio_foolio_avatar.png' className='token-image'/>
-                                <p className={styles.tokenItemText}>Juliofoolio</p>
+                                <img src='https://ipfs.io/ipfs/QmTRRFy828bSxEkVk59UXyLH9MEEmKLZWBQztbRV7R54wa' className='token-image'/>
+                                <p className={styles.tokenItemText}>Lil'Pump</p>
                                 <a href='#' className='stretched-link'></a>
                             </li>
 
