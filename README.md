@@ -1,5 +1,6 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+Marketplace Contract Addresss: https://thirdweb.com/zora-testnet/0x4E1E4ceB15ab6390F35259e77dd66563B234e31D ERC721 NFT Drop: Token Based Account deployed on ZORA: https://thirdweb.com/zora-testnet/0x0993123cd814FcADCc72d694F7123b1827b85cAB/nfts ERC155 GAME Edition Deployed on BASE: https://thirdweb.com/base-goerli/0x66b39C0ec1dFe2746fEceF23162D40cA2E7cd245 TRAP Tokens for the Trapchain: https://thirdweb.com/zora-testnet/0xD9E686e531D1b84AE500e6188f49d2442FB968d1 TBA NFT Account Mint on testnet.zora.co: https://testnet.zora.co/collect/zgor:0x0993123cd814fcadcc72d694f7123b1827b85cab
 ## Getting Started
 
 First, run the development server:
