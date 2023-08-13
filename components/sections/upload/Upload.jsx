@@ -332,7 +332,7 @@ const Upload = ( { hideModal }) => {
                                     <Textbox toDispatch={setTokenUri}/>
                                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                                         <Button text='Cancel' onClick={hideModal} marginRight='24px' bg='dark'/>
-                                        <Button text='Upload' onClick={uploadNFT}/>
+                                        {/* <Button text='Upload' onClick={uploadNFT}/> */}
                                         <small style={{paddingLeft: '30px'}} className='color-primary'>{fileSelected && (fileName.name.length >= 10 ? `${fileName.name.substr(0, 5)}...${fileName.name.substr(fileName.name.length - 5)}` : fileName.name)}</small>
                                         {fileSelected && <Button text='Change' type='small' onClick={ofd}/>}
                                         {(musicSelected || modelSelected) && (<small className='color-primary'>|</small>)}
