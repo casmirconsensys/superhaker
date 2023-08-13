@@ -14,22 +14,35 @@ import { WALLET_ADAPTERS } from '@safe-global/auth-kit';
 // import { PayPalButton } from 'react-paypal-button-v2';
 // import { auction } from '@thirdweb-dev/marketplace'; // Import the appropriate module from Thirdweb
 // import { NewAuctionListing } from '@thirdweb-dev/marketplace/types'; // Import the NewAuctionListing type from Thirdweb
-import { marketPlaceABI } from '../../../public/contract/abi'
 //   import { NATIVE_TOKEN_ADDRESS } from "@thirdweb-dev/sdk";
+import { marketPlaceABI } from '../../../public/contract/abi'
 import { useRouter } from "next/router";
+// import { StripePack } from 'stripe-pack'; // Adjust the package name accordingly
+
 const clientId = '';
 const currency = 'USD';
 
-
 const FeedCard = ({ feed }) => {
 
-    // const { Moralis, enableWeb3, web3 } = useMoralis()
     const { showNotification } = useNotification();
     const [showAll, setShowAll] = useState(false)
     const dispatch = useDispatch()
     const isPortrait = useMediaQuery({ query: '(orientation: portrait)' })
     const [buying, setBuying] = useState(false)
+    // const uiLoadedHandler = () => {
+    //     console.log('UI loaded')
+    //   }
+      
+    //   const sessionUpdatedHandler = (e) => {
+    //     console.log('Session Updated', e.payload)
+    //   }
+      
+    // //   stripePack.subscribe('onramp_ui_loaded', uiLoadedHandler)
+    //   stripePack.subscribe('onramp_session_updated', sessionUpdatedHandler)
+      
 
+    //   stripePack.unsubscribe('onramp_ui_loaded', uiLoadedHandler)
+    //   stripePack.unsubscribe('onramp_session_updated', sessionUpdatedHandler)
     const buyItem = async function createDirectListing(
         contractAddress,
         tokenId,
@@ -51,90 +64,7 @@ const FeedCard = ({ feed }) => {
             console.error(error);
         }
     };
-    
-    
-    const payWithWallet = async (id) => {
-        await enableWeb3();
-    
-        try {
-            const data = await thirdweb.getChainId();
-    
-            if (data === 1 || data === 56) {
-                let amount = '0.00031';
-                if (data === 56) amount = '0.0023';
-    
-                const options = { type: 'native', amount: thirdweb.Units.ETH(amount), receiver: '0xa63F77c709e87E0d1CaC383137C568D7835d9103' };
-                let result = await thirdweb.transfer(options);
-    
-                buyItem(id, result.from, 'none');
-            } else {
-                showNotification({ type: 'error', message: 'Make sure you are on ETH or BASE Network' });
-            }
-        } catch (error) {
-            showNotification({ type: 'error', message: error.message });
-        }
-    };
-    // // Options for Web3Auth
-    // async function initializeWeb3Auth() {
-    //     // Options for Web3Auth
-    //     const options = {
-    //         clientId: 'YOUR_WEB3_AUTH_CLIENT_ID',
-    //         web3AuthNetwork: 'testnet',
-    //         chainConfig: {
-    //             chainNamespace: process.env.CHAIN_NAMESPACES.EIP155,
-    //             chainId: '0x5',
-    //             rpcTarget: 'https://rpc.ankr.com/eth_goerli'
-    //         },
-    //         uiConfig: {
-    //             theme: 'dark',
-    //             loginMethodsOrder: ['google', 'facebook']
-    //         }
-    //     };
-        
-        // // Adapter configurations
-        // const modalConfig = {
-        //     [WALLET_ADAPTERS.TORUS_EVM]: {
-        //         label: 'torus',
-        //         showOnModal: false
-        //     },
-        //     [WALLET_ADAPTERS.METAMASK]: {
-        //         label: 'metamask',
-        //         showOnDesktop: true,
-        //         showOnMobile: false
-        //     }
-        // };
-        
-        // // Openlogin adapter
-        // const openloginAdapter = new OpenloginAdapter({
-        //     loginSettings: {
-        //         mfaLevel: 'mandatory'
-        //     },
-        //     adapterSettings: {
-        //         uxMode: 'popup',
-        //         whiteLabel: {
-        //             name: 'Safe'
-        //         }
-        //     }
-        // });
-        
-        // // Web3Auth configuration
-        // const web3AuthConfig = {
-        //     txServiceUrl: 'https://safe-transaction-goerli.safe.global'
-        // };
-        
-    //     // Instantiate and initialize the pack
-    //     const web3AuthModalPack = new Web3AuthModalPack(web3AuthConfig);
-        
-    //     try {
-    //         // await web3AuthModalPack.init({ options, adapters: [openloginAdapter], modalConfig });
-    //         console.log('Web3Auth initialized successfully.');
-    //     } catch (error) {
-    //         console.error('Error initializing Web3Auth:', error);
-    //     }
-    // }
-    
-    // // Call the async function to initialize Web3Auth
-    // initializeWeb3Auth();
+
      
 
     return (      
@@ -230,7 +160,9 @@ const FeedCard = ({ feed }) => {
                     <div className={styles.metaText}>
                         <div className={styles.topRowContainer}>
                             <p className={`${feed.feedType == 'Token' ? styles.badgeToken : styles.badgePlaylist} ${styles.badge}`}>{feed.feedType}</p>
-                            <Button type='secondary' iconOpacity={1} iconClass='icon-kebab-horizontal' onClick={() => router.push(feed.metapath)}/>
+                            <Button type='secondary' iconOpacity={1} iconClass='icon-kebab-horizontal' onClick={(
+
+                            ) => router.push(feed.metapath)}/>
                         </div>
                         <h3 className={styles.playlistTitle}>{feed.title} {feed.artist && <span className={styles.artist}>{feed.artist}</span>}</h3>
                         <h4 className={styles.username}>{feed.username}</h4>
@@ -256,7 +188,19 @@ const FeedCard = ({ feed }) => {
                         
                     }
                     /> */}
-                    <Button type='secondary' isOutline={1} text='Pay With Crypto' onClick={() => payWithWallet(feed.id)}/>
+                   <Button
+                        type='secondary'
+                        isOutline={1}
+                        text='Pay With Crypto'
+                        onClick={() => {
+                            // const stripePack = new StripePack({
+                            // stripePublicKey: 'pk_0KEVOnYBNRYKahDkGcrniMnINvkqo',
+                            // nftName: 'My NFT'
+                            // });
+                            // stripePack.payWithStripe();
+                        }}
+                        />
+
                     </div>
                 </div>
 
@@ -272,7 +216,9 @@ const FeedCard = ({ feed }) => {
                         </div>
                     ))}
                     
-                    {!showAll && <button type='button' onClick={()=> setShowAll(true)} className='btn btn-secondary btn-lg btn-block playlist-view-more'>View {feed.playlist.length} tokens</button>}
+                    {!showAll && <button type='button' onClick={(
+                        
+                    )=> setShowAll(true)} className='btn btn-secondary btn-lg btn-block playlist-view-more'>View {feed.playlist.length} tokens</button>}
                     {/* {!showAll && <Button type='secondary' bg='common' onClick={()=> setShowAll(true)} text={`View ${pl.length} tokens`} className={`btn btn-secondary btn-lg btn-block ${styles.playlistViewMore}`}/>} */}
                 </>
 
@@ -315,3 +261,87 @@ export default FeedCard
 //     </div>
 //   );
 // }
+    
+    
+    // const payWithWallet = async (id) => {
+    //     await enableWeb3();
+    
+    //     try {
+    //         const data = await thirdweb.getChainId();
+    
+    //         if (data === 1 || data === 56) {
+    //             let amount = '0.00031';
+    //             if (data === 56) amount = '0.0023';
+    
+    //             const options = { type: 'native', amount: thirdweb.Units.ETH(amount), receiver: '0xa63F77c709e87E0d1CaC383137C568D7835d9103' };
+    //             let result = await thirdweb.transfer(options);
+    
+    //             buyItem(id, result.from, 'none');
+    //         } else {
+    //             showNotification({ type: 'error', message: 'Make sure you are on ETH or BASE Network' });
+    //         }
+    //     } catch (error) {
+    //         showNotification({ type: 'error', message: error.message });
+    //     }
+    // };
+    // // Options for Web3Auth
+    // async function initializeWeb3Auth() {
+    //     // Options for Web3Auth
+    //     const options = {
+    //         clientId: 'YOUR_WEB3_AUTH_CLIENT_ID',
+    //         web3AuthNetwork: 'testnet',
+    //         chainConfig: {
+    //             chainNamespace: process.env.CHAIN_NAMESPACES.EIP155,
+    //             chainId: '0x5',
+    //             rpcTarget: 'https://rpc.ankr.com/eth_goerli'
+    //         },
+    //         uiConfig: {
+    //             theme: 'dark',
+    //             loginMethodsOrder: ['google', 'facebook']
+    //         }
+    //     };
+        
+        // // Adapter configurations
+        // const modalConfig = {
+        //     [WALLET_ADAPTERS.TORUS_EVM]: {
+        //         label: 'torus',
+        //         showOnModal: false
+        //     },
+        //     [WALLET_ADAPTERS.METAMASK]: {
+        //         label: 'metamask',
+        //         showOnDesktop: true,
+        //         showOnMobile: false
+        //     }
+        // };
+        
+        // // Openlogin adapter
+        // const openloginAdapter = new OpenloginAdapter({
+        //     loginSettings: {
+        //         mfaLevel: 'mandatory'
+        //     },
+        //     adapterSettings: {
+        //         uxMode: 'popup',
+        //         whiteLabel: {
+        //             name: 'Safe'
+        //         }
+        //     }
+        // });
+        
+        // // Web3Auth configuration
+        // const web3AuthConfig = {
+        //     txServiceUrl: 'https://safe-transaction-goerli.safe.global'
+        // };
+        
+    //     // Instantiate and initialize the pack
+    //     const web3AuthModalPack = new Web3AuthModalPack(web3AuthConfig);
+        
+    //     try {
+    //         // await web3AuthModalPack.init({ options, adapters: [openloginAdapter], modalConfig });
+    //         console.log('Web3Auth initialized successfully.');
+    //     } catch (error) {
+    //         console.error('Error initializing Web3Auth:', error);
+    //     }
+    // }
+    
+    // // Call the async function to initialize Web3Auth Fallback function 
+    // initializeWeb3Auth();

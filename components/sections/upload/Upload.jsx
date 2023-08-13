@@ -1,6 +1,6 @@
 import React from 'react'
 import { ethers } from 'ethers';
-import ipfsClient from 'ipfs-http-client';
+import ipfsClient, { create } from 'ipfs-http-client';
 // import { createClient } from '@supabase/supabase-js';
 import { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
@@ -8,6 +8,7 @@ import { ZDK } from "@zoralabs/zdk";
 import { Strategies, Networks, useNFT, MediaFetchAgent } from '@zoralabs/nft-hooks';
 // import { ZoraTestnet } from "@thirdweb-dev/chains";
 // import { ThirdwebSDK } from "@thirdweb-dev/sdk";
+// import  Create  from '/upload/Create.js'
 import styles from './Upload.module.css'
 import Label from '../../basic/label/Label'
 import Textbox from '../../basic/textbox/Textbox'
@@ -43,8 +44,6 @@ const Upload = ( { hideModal }) => {
 
     const dispatch = useDispatch()
     const [fileType, setFileType] = useState('')
-
-    // const { ipfs, enableWeb3, web3 } = useipfs()
     const { showNotification } = useNotification();
     const fileName = useSelector(state => state.upload.file)
     const tokenName = useSelector(state => state.upload.tokenName)
@@ -52,7 +51,7 @@ const Upload = ( { hideModal }) => {
     const tokenPrice = useSelector(state => state.upload.tokenPrice)
     const tokenArtist = useSelector(state => state.upload.tokenArtist)
     const tokenUri = useSelector(state => state.upload.tokenUri)
-    const tokenAlbumArt = useSelector(state => state.upload.tokenAlbumArt)
+    const tokenAlbumArt = useSelector(state => state.uploadtokenAlbumArt)
     const [isUploading, setisUploading] = useState(false)
     const [uploadStatus, setuploadStatus] = useState(false)
     const [uploadComplete, setuploadComplete] = useState(false)
@@ -119,6 +118,8 @@ const Upload = ( { hideModal }) => {
         setuploadStatus('Minting')
         setMintReceipt(receipt)
         return receipt.events.Transfer.returnValues.tokenId;
+
+        
     }
 
     const ensureMarketplaceIsApproved = async (tokenId) => {
@@ -243,32 +244,24 @@ const Upload = ( { hideModal }) => {
             setuploadComplete(true)
             setisUploading(false)
         }
+        await getNFTs(console.log)('NFTs loaded')
+
     }
-    function createDirectListing(contractAddress, tokenId, price) {
-        try {
-          const transaction = marketplace?.direct.createListing({
-            assetContractAddress: contractAddress, // Contract Address of the NFT
-            buyoutPricePerToken: price, // Maximum price, the auction will end immediately if a user pays this price.
-            currencyContractAddress: NATIVE_TOKEN_ADDRESS, // NATIVE_TOKEN_ADDRESS is the crpyto curency that is native to the network. i.e. Goerli ETH.
-            listingDurationInSeconds: 60 * 60 * 24 * 7, // When the auction will be closed and no longer accept bids (1 Week)
-            quantity: 1, // How many of the NFTs are being listed (useful for ERC 1155 tokens)
-            startTimestamp: new Date(0), // When the listing will start
-            tokenId: tokenId, // Token ID of the NFT.
-          });
-      
-          return transaction;
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    const uploadNFT = async () => {
-        contractAddress =   0x3d27dc56c8946401f82f286467c409b77fb9cdd6;
-        tokenId = 1;
-        price = 0.01;
-        const transaction = createDirectListing(contractAddress, tokenId, price);
-        const receipt = await transaction.sendTransaction();
-        console.log(receipt);
+    const createDirectListing = (contractAddress, tokenId, price) => {
+        const contract = new web3.eth.Contract(marketPlaceABI, MARKETPLACE_CONTRACT_ADDRESS.current)
+        return contract.methods.addItemToMarket(contractAddress, tokenId, ipfs.Units.ETH(price))
     }
+
+
+
+    // const uploadNFT = async () => {
+    //     // let contractAddress = 0x3d27dc56c8946401f82f286467c409b77fb9cdd6;
+    //     // let tokenId = 1;
+    //     // let price = 0.01;
+    //     // const transaction = createDirectListing(contractAddress, tokenId, price);
+    //     const receipt = await transaction.sendTransaction();
+    //     console.log(receipt);
+    // }
 
     const { data, error, loading } = useNFT({
         tokenId: 1,
@@ -277,36 +270,9 @@ const Upload = ( { hideModal }) => {
         networkId: 999,
     });
     console.log(data);
-    console.log(error);
+    console.log(error, 'error on useNFT uploadNFT');
     console.log(loading);
-    // The shape for the *data* response
-  
-    // const uploadNFT = async () => {
-    //     // const id = await ipfs.getChainId().then(async (data) => {
-    //         // chainId.current = data
-    //         // if (chainId.current === 999) {
-    //         //     await processNFT()
-    //         // }  else {
-    //         //     showNotification({type: 'warning', message: 'No supported chain found. Trapchain will be added as the default chain. Approve to proceed'})
-    //         //     await switchNetworkToZORA()    
-    //         //     await sendUserGETH() 
-    //         //     await processNFT()            
-    //         // }
-    //     }
-        const YourComponent = () => {
-            const [isUploading, setIsUploading] = useState(false);
-          
-            useEffect(() => {
-              // Update isUploading based on some condition
-              setIsUploading(true);
-          
-              // Perform cleanup or other effects if needed
-              return () => {
-                setIsUploading(false);
-              };
-            }, []); // Empty dependency array means this effect runs only once
-        };
-  
+
     return (
             <div className={styles.main}>
                 { isUploading ? 

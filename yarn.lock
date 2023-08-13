@@ -2528,6 +2528,11 @@
     semver "^7.3.8"
     superstruct "^1.0.3"
 
+"@monerium/sdk@^2.3.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@monerium/sdk/-/sdk-2.6.0.tgz#5cd24809474097421ecd11b1a0176becc4daee58"
+  integrity sha512-NTvMks6M7HQNdFAQnfu5wVudr2Oxxa+vq0K8gTc4G4g7Sz/DIXYINclIzGQCnAJ7WVUwCmu0wM1Cnl8nWDi/7g==
+
 "@motionone/animation@^10.15.1":
   version "10.15.1"
   resolved "https://registry.yarnpkg.com/@motionone/animation/-/animation-10.15.1.tgz#4a85596c31cbc5100ae8eb8b34c459fb0ccf6807"
@@ -3265,6 +3270,19 @@
     "@web3auth/openlogin-adapter" "^4.3.0"
     ethers "^5.7.2"
 
+"@safe-global/onramp-kit@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@safe-global/onramp-kit/-/onramp-kit-1.3.0.tgz#463482bc4a985b960d29f2ea9a3ac7b54cc28844"
+  integrity sha512-yxyTrh7JMJogVrUd942EuGrJLyUc9Q1V0XoOkzeQYf874pubiglQ+pTi6D6+DfeHUAMLm9aHYAnTmSOenHo8DA==
+  dependencies:
+    "@monerium/sdk" "^2.3.0"
+    "@safe-global/api-kit" "^1.3.0"
+    "@safe-global/protocol-kit" "^1.2.0"
+    "@safe-global/safe-core-sdk-types" "^2.2.0"
+    "@stripe/crypto" "^0.0.4"
+    "@stripe/stripe-js" "^1.52.0"
+    ethers "^5.7.0"
+
 "@safe-global/protocol-kit@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@safe-global/protocol-kit/-/protocol-kit-1.2.0.tgz#5501fa0e2a1b4ad03cd5a4ee12bb9e799e1dd5a7"
@@ -3579,6 +3597,21 @@
     "@stablelib/keyagreement" "^1.0.1"
     "@stablelib/random" "^1.0.2"
     "@stablelib/wipe" "^1.0.1"
+
+"@stripe/crypto@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@stripe/crypto/-/crypto-0.0.4.tgz#51dbcb3750c75a6b8a6c8775381af82367359146"
+  integrity sha512-gcD/aG0N90ZrNVppWYf9ADPECptw6PVtF67VIeaFP7fhgd2NvNx8erkzlcvk3VIVSY+bZ6YGX7c7cASoySX74Q==
+
+"@stripe/stripe-js@^1.52.0":
+  version "1.54.2"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.54.2.tgz#0665848e22cbda936cfd05256facdfbba121438d"
+  integrity sha512-R1PwtDvUfs99cAjfuQ/WpwJ3c92+DAMy9xGApjqlWQMj0FKQabUAys2swfTRNzuYAYJh7NqK2dzcYVNkKLEKUg==
+
+"@stripe/stripe-js@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-2.0.0.tgz#74377dbdfcfee13043ed7d130a69ba15eb18b9ce"
+  integrity sha512-SxZnf192En0uAfgbigUIj7oJYaXgGc5AI1aos59YXvO8DPeLI0AtT4oMg/Wuk17wbpquEv73+akyCe7xdEjGlA==
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
@@ -4431,7 +4464,7 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
 
-"@types/node@*", "@types/node@>=13.7.0":
+"@types/node@*", "@types/node@>=13.7.0", "@types/node@>=8.1.0":
   version "20.4.10"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.4.10.tgz#73c9480791e3ddeb4887a660fc93a7f59353ad45"
   integrity sha512-vwzFiiy8Rn6E0MtA13/Cxxgpan/N6UeNYR9oUu6kuJWxu6zCk98trcDp8CBhbtaeuq9SykCmXkFr2lWLoPcvLg==
@@ -17935,6 +17968,14 @@ strip-json-comments@^3.0.1, strip-json-comments@^3.1.0, strip-json-comments@^3.1
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-3.1.1.tgz#31f1281b3832630434831c310c01cccda8cbe006"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
+
+stripe@^12.18.0:
+  version "12.18.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-12.18.0.tgz#1190aec3cf075d0611287046386bf0c0d165db69"
+  integrity sha512-cYjgBM2SY/dTm8Lr6eMyyONaHTZHA/QjHxFUIW5WH8FevSRIGAVtXEmBkUXF1fsqe7QvvRgQSGSJZmjDacegGg==
+  dependencies:
+    "@types/node" ">=8.1.0"
+    qs "^6.11.0"
 
 style-loader@0.23.1:
   version "0.23.1"
