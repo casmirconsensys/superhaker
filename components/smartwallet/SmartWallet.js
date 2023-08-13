@@ -10,6 +10,11 @@ import {
 import { SmartContract, NFT } from "@thirdweb-dev/sdk";
 import { WalletOptions } from "@thirdweb-dev/wallets";
 
+let account = 0x111d92DDab5211e5bE89B1Bd85066b2cfeC205B4;//Optimism Deployment Token Based Account
+let walletOptions = new WalletOptions();
+walletOptions.gasless = true;
+walletOptions.factoryAddress = factoryAddress;
+
 export default function newSmartWallet(token) {
   const config = {
     chain: activeChain,

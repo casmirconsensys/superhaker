@@ -28,7 +28,7 @@ const AddToken = () => {
         </div>
         <div className='icon-arrow-right-alternate' style={{ width: '24px', height: '24px' }} />
       </button>
-      <Modal
+      {/* <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="Add Token Modal"
@@ -42,7 +42,7 @@ const AddToken = () => {
           frameBorder="0"
         ></iframe>
         <button onClick={closeModal}>Close Modal</button>
-      </Modal>
+      </Modal> */}
     </>
   );
 };
